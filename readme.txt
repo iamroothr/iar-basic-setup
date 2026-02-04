@@ -52,7 +52,7 @@ Yes, but if you enable the "Disable Gutenberg" module, you won't need the Classi
 
 = Is it safe to enable SVG uploads? =
 
-SVG files can potentially contain malicious code. Only enable this feature if you trust all users who have upload permissions on your site.
+Yes. SVG files are sanitized on upload to block potentially malicious content (scripts, event handlers, etc.).
 
 = What gets cloned with the Post Cloner? =
 

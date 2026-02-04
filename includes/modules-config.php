@@ -1,0 +1,60 @@
+<?php
+/**
+ * Centralized module configuration.
+ *
+ * @package IAR_Basic_Setup
+ */
+
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
+
+/**
+ * Get all available modules.
+ *
+ * @return array<string, array{file: string, title: string, desc: string}>
+ */
+function iar_get_modules(): array {
+	return [
+		'disable-gutenberg' => [
+			'file'  => 'disable-gutenberg/disable-gutenberg.php',
+			'title' => 'Disable Gutenberg',
+			'desc'  => 'Replaces the block editor with the classic editor.',
+		],
+		'disable-comments'  => [
+			'file'  => 'disable-comments/disable-comments.php',
+			'title' => 'Disable Comments',
+			'desc'  => 'Completely removes comments functionality.',
+		],
+		'hide-admin-bar'    => [
+			'file'  => 'hide-admin-bar/hide-admin-bar.php',
+			'title' => 'Hide Admin Bar',
+			'desc'  => 'Hides the admin bar for non-administrator users.',
+		],
+		'clean-head'        => [
+			'file'  => 'clean-head/clean-head.php',
+			'title' => 'Clean Head',
+			'desc'  => 'Removes unnecessary meta tags from the document head.',
+		],
+		'disable-emojis'    => [
+			'file'  => 'disable-emojis/disable-emojis.php',
+			'title' => 'Disable Emojis',
+			'desc'  => 'Removes emoji scripts and styles.',
+		],
+		'svg-support'       => [
+			'file'  => 'svg-support/svg-support.php',
+			'title' => 'Enable SVG Support',
+			'desc'  => 'Allows uploading SVG files to the media library.',
+		],
+		'disable-xmlrpc'    => [
+			'file'  => 'disable-xmlrpc/disable-xmlrpc.php',
+			'title' => 'Disable XML-RPC',
+			'desc'  => 'Disables XML-RPC for better security.',
+		],
+		'post-cloner'       => [
+			'file'  => 'post-cloner/post-cloner.php',
+			'title' => 'Post Cloner',
+			'desc'  => 'Adds a Clone action to duplicate posts, pages, and CPTs.',
+		],
+	];
+}

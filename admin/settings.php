@@ -63,7 +63,7 @@ add_action( 'admin_enqueue_scripts', function ( $hook ) {
         return;
     }
 
-    wp_enqueue_style( 'iar-basic-setup-admin', IAR_PLUGIN_URL . 'assets/style/admin/admin.css', [], '1.0.0' );
+    wp_enqueue_style( 'iar-basic-setup-admin', IAR_PLUGIN_URL . 'assets/style/admin/admin.css', [], IAR_PLUGIN_VERSION );
 } );
 
 /**
@@ -88,41 +88,7 @@ function iar_basic_setup_render_page(): void {
     }
 
     $options = get_option( 'iar_basic_setup_options', [] );
-
-    $modules = [
-            'disable-gutenberg' => [
-                    'title' => 'Disable Gutenberg',
-                    'desc'  => 'Replaces the block editor with the classic editor.',
-            ],
-            'disable-comments'  => [
-                    'title' => 'Disable Comments',
-                    'desc'  => 'Completely removes comments functionality.',
-            ],
-            'hide-admin-bar'    => [
-                    'title' => 'Hide Admin Bar',
-                    'desc'  => 'Hides the admin bar for non-administrator users.',
-            ],
-            'clean-head'        => [
-                    'title' => 'Clean Head',
-                    'desc'  => 'Removes unnecessary meta tags from the document head.',
-            ],
-            'disable-emojis'    => [
-                    'title' => 'Disable Emojis',
-                    'desc'  => 'Removes emoji scripts and styles.',
-            ],
-            'svg-support'       => [
-                    'title' => 'Enable SVG Support',
-                    'desc'  => 'Allows uploading SVG files to the media library.',
-            ],
-            'disable-xmlrpc'    => [
-                    'title' => 'Disable XML-RPC',
-                    'desc'  => 'Disables XML-RPC for better security.',
-            ],
-            'post-cloner'       => [
-                    'title' => 'Post Cloner',
-                    'desc'  => 'Adds a Clone action to duplicate posts, pages, and CPTs.',
-            ],
-    ];
+    $modules = iar_get_modules();
     ?>
 
     <div class="wrap iar-admin-wrap">

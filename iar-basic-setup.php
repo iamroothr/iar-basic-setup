@@ -17,10 +17,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+define( 'IAR_PLUGIN_VERSION', '1.0.0' );
 define( 'IAR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'IAR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
-// Load Admin Dashboard
+require_once IAR_PLUGIN_PATH . 'includes/modules-config.php';
 require_once IAR_PLUGIN_PATH . 'admin/settings.php';
 
 /**
@@ -28,21 +29,11 @@ require_once IAR_PLUGIN_PATH . 'admin/settings.php';
  */
 add_action( 'plugins_loaded', function () {
 	$options = get_option( 'iar_basic_setup_options', [] );
+	$modules = iar_get_modules();
 
-	$modules = [
-		'disable-gutenberg' => 'disable-gutenberg/disable-gutenberg.php',
-		'disable-comments'  => 'disable-comments/disable-comments.php',
-		'hide-admin-bar'    => 'hide-admin-bar/hide-admin-bar.php',
-		'clean-head'        => 'clean-head/clean-head.php',
-		'disable-emojis'    => 'disable-emojis/disable-emojis.php',
-		'svg-support'       => 'svg-support/svg-support.php',
-		'disable-xmlrpc'    => 'disable-xmlrpc/disable-xmlrpc.php',
-		'post-cloner'       => 'post-cloner/post-cloner.php',
-	];
-
-	foreach ( $modules as $key => $file ) {
+	foreach ( $modules as $key => $module ) {
 		if ( ! empty( $options[ $key ] ) ) {
-			require_once IAR_PLUGIN_PATH . 'modules/' . $file;
+			require_once IAR_PLUGIN_PATH . 'modules/' . $module['file'];
 		}
 	}
 } );

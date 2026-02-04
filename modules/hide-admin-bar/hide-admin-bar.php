@@ -9,7 +9,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 add_action( 'after_setup_theme', function () {
-	if ( ! current_user_can( 'administrator' ) && ! is_admin() ) {
+	if ( ! current_user_can( 'manage_options' ) && ! is_admin() ) {
 		show_admin_bar( false );
 	}
 } );
