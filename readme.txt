@@ -1,6 +1,6 @@
 === IAR Basic Setup ===
 Contributors: iamrootagency
-Tags: cleanup, optimization, disable gutenberg, disable comments, security
+Tags: cleanup, optimization, disable gutenberg, disable comments, security, smtp, maintenance mode
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
@@ -28,6 +28,13 @@ IAR Basic Setup is a lightweight, modular plugin that helps you clean up and opt
 * **Post Cloner** - Adds a Clone action to duplicate posts, pages, and custom post types
 * **Custom Login URL** - Replaces /wp-login.php with a custom path to reduce brute-force attacks
 * **Custom Login Logo** - Replaces the WordPress logo on the login page with a custom image
+* **Disable RSS Feeds** - Disables all RSS and Atom feed endpoints
+* **Disable Author Archives** - Prevents user enumeration through author archive pages
+* **Disable REST API for Guests** - Restricts REST API access to authenticated users only
+* **Limit Login Attempts** - Blocks an IP address after failed login attempts
+* **Maintenance Mode** - Displays a maintenance page for non-admin visitors
+* **Duplicate Menu** - Adds a Duplicate action to clone nav menus with all items
+* **SMTP Mail** - Configures WordPress to send emails through SMTP
 
 **Features:**
 
@@ -83,6 +90,13 @@ The Post Cloner duplicates: post title (prefixed with "Copy of"), content, excer
 * Added Enable Debug Mode module
 * Added Custom Login URL module
 * Added Custom Login Logo module
+* Added Disable RSS Feeds module
+* Added Disable Author Archives module
+* Added Disable REST API for Guests module
+* Added Limit Login Attempts module
+* Added Maintenance Mode module
+* Added Duplicate Menu module
+* Added SMTP Mail module
 
 == Upgrade Notice ==
 
