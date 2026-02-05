@@ -91,5 +91,10 @@ function iar_get_modules(): array {
 			'title' => 'Disable REST API for Guests',
 			'desc'  => 'Restricts REST API access to authenticated users only.',
 		],
+		'limit-login-attempts' => [
+			'file'  => 'limit-login-attempts/limit-login-attempts.php',
+			'title' => 'Limit Login Attempts',
+			'desc'  => 'Blocks an IP address after failed login attempts.',
+		],
 	];
 }
