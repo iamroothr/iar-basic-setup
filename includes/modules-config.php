@@ -106,5 +106,10 @@ function iar_get_modules(): array {
 			'title' => 'Duplicate Menu',
 			'desc'  => 'Adds a Duplicate action to clone nav menus with all items.',
 		],
+		'smtp-mail' => [
+			'file'  => 'smtp-mail/smtp-mail.php',
+			'title' => 'SMTP Mail',
+			'desc'  => 'Configures WordPress to send emails through SMTP.',
+		],
 	];
 }
