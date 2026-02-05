@@ -12,13 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  * Handle menu duplication request.
  */
 function iar_duplicate_menu_handler(): void {
-	$menu_id = isset( $_GET['menu_id'] ) ? absint( $_GET['menu_id'] ) : 0;
-
-	if ( ! $menu_id ) {
-		wp_die( __( 'No menu to duplicate.', 'iar-basic-setup' ) );
-	}
-
-	if ( ! isset( $_GET['_wpnonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_GET['_wpnonce'] ) ), 'iar_duplicate_menu_' . $menu_id ) ) {
+	if ( ! isset( $_POST['iar_duplicate_menu_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['iar_duplicate_menu_nonce'] ) ), 'iar_duplicate_menu' ) ) {
 		wp_die( __( 'Security check failed.', 'iar-basic-setup' ) );
 	}
 
@@ -26,13 +20,23 @@ function iar_duplicate_menu_handler(): void {
 		wp_die( __( 'You do not have permission to duplicate menus.', 'iar-basic-setup' ) );
 	}
 
+	$menu_id = isset( $_POST['source_menu_id'] ) ? absint( $_POST['source_menu_id'] ) : 0;
+
+	if ( ! $menu_id ) {
+		wp_die( __( 'No menu to duplicate.', 'iar-basic-setup' ) );
+	}
+
 	$source_menu = wp_get_nav_menu_object( $menu_id );
 	if ( ! $source_menu ) {
 		wp_die( __( 'Menu not found.', 'iar-basic-setup' ) );
 	}
 
-	$new_menu_name = sprintf( '%s (Copy)', $source_menu->name );
-	$new_menu_id   = wp_create_nav_menu( $new_menu_name );
+	$new_menu_name = isset( $_POST['new_menu_name'] ) ? sanitize_text_field( wp_unslash( $_POST['new_menu_name'] ) ) : '';
+	if ( empty( $new_menu_name ) ) {
+		$new_menu_name = sprintf( '%s (Copy)', $source_menu->name );
+	}
+
+	$new_menu_id = wp_create_nav_menu( $new_menu_name );
 
 	if ( is_wp_error( $new_menu_id ) ) {
 		wp_die( $new_menu_id->get_error_message() );
@@ -40,10 +44,10 @@ function iar_duplicate_menu_handler(): void {
 
 	iar_duplicate_menu_clone_items( $menu_id, $new_menu_id );
 
-	$redirect_url = add_query_arg( [
-		'menu'                   => $new_menu_id,
-		'iar_menu_duplicated'    => 1,
-	], admin_url( 'nav-menus.php' ) );
+	$redirect_url = add_query_arg(
+		[ 'iar_menu_duplicated' => 1 ],
+		admin_url( 'admin.php?page=iar-duplicate-menu' )
+	);
 
 	wp_redirect( $redirect_url );
 	exit;
@@ -98,69 +102,9 @@ function iar_duplicate_menu_clone_items( int $source_menu_id, int $new_menu_id )
 			continue;
 		}
 
-		$new_item_id     = $id_map[ $item->ID ];
-		$new_parent_id   = $id_map[ $item->menu_item_parent ];
+		$new_item_id   = $id_map[ $item->ID ];
+		$new_parent_id = $id_map[ $item->menu_item_parent ];
 
 		update_post_meta( $new_item_id, '_menu_item_menu_item_parent', $new_parent_id );
 	}
 }
-
-/**
- * Add duplicate button via JavaScript.
- */
-function iar_duplicate_menu_add_button(): void {
-	$menu_id = isset( $_GET['menu'] ) ? absint( $_GET['menu'] ) : 0;
-
-	if ( ! $menu_id ) {
-		return;
-	}
-
-	$duplicate_url = wp_nonce_url(
-		admin_url( 'admin-post.php?action=iar_duplicate_menu&menu_id=' . $menu_id ),
-		'iar_duplicate_menu_' . $menu_id
-	);
-	?>
-	<script>
-	(function() {
-		var menuSelector = document.getElementById('menu-name-label');
-		if (!menuSelector) return;
-
-		var parentDiv = menuSelector.closest('.menu-name-label');
-		if (!parentDiv) return;
-
-		var duplicateBtn = document.createElement('a');
-		duplicateBtn.href = '<?php echo esc_js( $duplicate_url ); ?>';
-		duplicateBtn.className = 'button button-secondary';
-		duplicateBtn.style.marginLeft = '10px';
-		duplicateBtn.textContent = '<?php echo esc_js( __( 'Duplicate This Menu', 'iar-basic-setup' ) ); ?>';
-
-		var inputField = parentDiv.querySelector('input[name="menu-name"]');
-		if (inputField) {
-			inputField.parentNode.insertBefore(duplicateBtn, inputField.nextSibling);
-		}
-	})();
-	</script>
-	<?php
-}
-add_action( 'admin_footer-nav-menus.php', 'iar_duplicate_menu_add_button' );
-
-/**
- * Show admin notice after successful duplication.
- */
-function iar_duplicate_menu_admin_notice(): void {
-	$screen = get_current_screen();
-	if ( ! $screen || 'nav-menus' !== $screen->id ) {
-		return;
-	}
-
-	if ( empty( $_GET['iar_menu_duplicated'] ) ) {
-		return;
-	}
-
-	?>
-	<div class="notice notice-success is-dismissible">
-		<p><?php esc_html_e( 'Menu duplicated successfully.', 'iar-basic-setup' ); ?></p>
-	</div>
-	<?php
-}
-add_action( 'admin_notices', 'iar_duplicate_menu_admin_notice' );
