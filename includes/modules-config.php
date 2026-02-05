@@ -71,5 +71,10 @@ function iar_get_modules(): array {
 			'title' => 'Custom Login URL',
 			'desc'  => 'Replaces /wp-login.php with a custom path to reduce brute-force attacks.',
 		],
+		'custom-login-logo' => [
+			'file'  => 'custom-login-logo/custom-login-logo.php',
+			'title' => 'Custom Login Logo',
+			'desc'  => 'Replaces the WordPress logo on the login page with a custom image.',
+		],
 	];
 }

@@ -99,7 +99,7 @@ When you want to publish a new version:
 - [ ] Custom Login Logo - Replaces the WordPress logo on the login page
 - [x] Disable Auto Updates - Controls automatic updates for core, plugins, and themes
 - [ ] SMTP Mail - Sends emails through SMTP instead of PHP mail()
-- [ ] Custom Login URL - Replaces /wp-login.php with a custom path to reduce brute-force attacks
+- [x] Custom Login URL - Replaces /wp-login.php with a custom path to reduce brute-force attacks
 - [x] Enable Debug Mode - Toggles WP_DEBUG and related constants for troubleshooting
 
 ---
