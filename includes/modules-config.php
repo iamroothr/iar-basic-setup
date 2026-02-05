@@ -51,6 +51,16 @@ function iar_get_modules(): array {
 			'title' => 'Disable XML-RPC',
 			'desc'  => 'Disables XML-RPC for better security.',
 		],
+		'disable-auto-updates' => [
+			'file'  => 'disable-auto-updates/disable-auto-updates.php',
+			'title' => 'Disable Auto Updates',
+			'desc'  => 'Disables automatic updates for core, plugins, and themes.',
+		],
+		'enable-debug'         => [
+			'file'  => 'enable-debug/enable-debug.php',
+			'title' => 'Enable Debug Mode',
+			'desc'  => 'Enables error reporting, display, and logging for troubleshooting.',
+		],
 		'post-cloner'       => [
 			'file'  => 'post-cloner/post-cloner.php',
 			'title' => 'Post Cloner',
