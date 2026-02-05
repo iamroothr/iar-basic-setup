@@ -86,5 +86,10 @@ function iar_get_modules(): array {
 			'title' => 'Disable Author Archives',
 			'desc'  => 'Prevents user enumeration through author archive pages.',
 		],
+		'disable-rest-api-guests' => [
+			'file'  => 'disable-rest-api-guests/disable-rest-api-guests.php',
+			'title' => 'Disable REST API for Guests',
+			'desc'  => 'Restricts REST API access to authenticated users only.',
+		],
 	];
 }
