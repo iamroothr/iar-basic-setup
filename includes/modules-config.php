@@ -66,5 +66,10 @@ function iar_get_modules(): array {
 			'title' => 'Post Cloner',
 			'desc'  => 'Adds a Clone action to duplicate posts, pages, and CPTs.',
 		],
+		'custom-login-url'  => [
+			'file'  => 'custom-login-url/custom-login-url.php',
+			'title' => 'Custom Login URL',
+			'desc'  => 'Replaces /wp-login.php with a custom path to reduce brute-force attacks.',
+		],
 	];
 }
