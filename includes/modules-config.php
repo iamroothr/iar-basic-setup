@@ -76,5 +76,10 @@ function iar_get_modules(): array {
 			'title' => 'Custom Login Logo',
 			'desc'  => 'Replaces the WordPress logo on the login page with a custom image.',
 		],
+		'disable-rss-feeds' => [
+			'file'  => 'disable-rss-feeds/disable-rss-feeds.php',
+			'title' => 'Disable RSS Feeds',
+			'desc'  => 'Disables all RSS and Atom feed endpoints.',
+		],
 	];
 }
