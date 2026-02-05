@@ -81,5 +81,10 @@ function iar_get_modules(): array {
 			'title' => 'Disable RSS Feeds',
 			'desc'  => 'Disables all RSS and Atom feed endpoints.',
 		],
+		'disable-author-archives' => [
+			'file'  => 'disable-author-archives/disable-author-archives.php',
+			'title' => 'Disable Author Archives',
+			'desc'  => 'Prevents user enumeration through author archive pages.',
+		],
 	];
 }
