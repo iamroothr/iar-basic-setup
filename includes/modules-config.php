@@ -101,5 +101,10 @@ function iar_get_modules(): array {
 			'title' => 'Maintenance Mode',
 			'desc'  => 'Displays a maintenance page for non-admin visitors.',
 		],
+		'duplicate-menu' => [
+			'file'  => 'duplicate-menu/duplicate-menu.php',
+			'title' => 'Duplicate Menu',
+			'desc'  => 'Adds a Duplicate action to clone nav menus with all items.',
+		],
 	];
 }
