@@ -96,5 +96,10 @@ function iar_get_modules(): array {
 			'title' => 'Limit Login Attempts',
 			'desc'  => 'Blocks an IP address after failed login attempts.',
 		],
+		'maintenance-mode' => [
+			'file'  => 'maintenance-mode/maintenance-mode.php',
+			'title' => 'Maintenance Mode',
+			'desc'  => 'Displays a maintenance page for non-admin visitors.',
+		],
 	];
 }
