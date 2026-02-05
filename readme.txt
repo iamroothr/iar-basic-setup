@@ -23,7 +23,10 @@ IAR Basic Setup is a lightweight, modular plugin that helps you clean up and opt
 * **Disable Emojis** - Removes WordPress emoji scripts and styles for better performance
 * **Enable SVG Support** - Allows uploading SVG files to the media library
 * **Disable XML-RPC** - Disables XML-RPC for better security
+* **Disable Auto Updates** - Disables automatic updates for core, plugins, and themes
+* **Enable Debug Mode** - Enables error reporting, display, and logging for troubleshooting
 * **Post Cloner** - Adds a Clone action to duplicate posts, pages, and custom post types
+* **Custom Login URL** - Replaces /wp-login.php with a custom path to reduce brute-force attacks
 
 **Features:**
 
@@ -75,6 +78,9 @@ The Post Cloner duplicates: post title (prefixed with "Copy of"), content, excer
 * Added SVG Support module
 * Added Disable XML-RPC module
 * Added Post Cloner module
+* Added Disable Auto Updates module
+* Added Enable Debug Mode module
+* Added Custom Login URL module
 
 == Upgrade Notice ==
 
