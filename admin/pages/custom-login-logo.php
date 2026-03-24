@@ -54,23 +54,29 @@ function iar_custom_login_logo_render_page(): void {
 	$attachment_id = ! empty( $options['attachment_id'] ) ? (int) $options['attachment_id'] : 0;
 	$image_url     = $attachment_id ? wp_get_attachment_image_url( $attachment_id, 'medium' ) : '';
 	?>
-	<div class="wrap iar-admin-wrap">
-		<h1>Custom Login Logo <small style="font-size: .7rem;">Replace the login page logo:</small></h1>
+
+	<div class="wrap iar-wrap">
 
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_custom_login_logo_group' ); ?>
 
-			<div class="iar-modules-grid">
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Logo Image</h3>
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">photo_camera</span>
 					</div>
+					<span class="iar-section-heading__label">Logo Image</span>
+				</div>
 
-					<div id="iar-logo-preview" style="margin-bottom: 12px;">
+				<div class="iar-logo-panel">
+					<div id="iar-logo-preview" class="iar-logo-preview">
 						<?php if ( $image_url ) : ?>
-							<img src="<?php echo esc_url( $image_url ); ?>" alt="Login logo preview" style="max-width: 320px; max-height: 120px;">
+							<img src="<?php echo esc_url( $image_url ); ?>" alt="Login logo preview">
 						<?php else : ?>
-							<p class="description">No custom logo selected. The default WordPress logo will be shown.</p>
+							<div class="iar-logo-preview__empty">
+								<span class="material-symbols-outlined">image</span>
+								<span>No logo selected &mdash; WordPress default will be shown.</span>
+							</div>
 						<?php endif; ?>
 					</div>
 
@@ -81,14 +87,35 @@ function iar_custom_login_logo_render_page(): void {
 						value="<?php echo esc_attr( $attachment_id ); ?>"
 					>
 
-					<p>
-						<button type="button" class="button" id="iar-logo-select">Select Image</button>
-						<button type="button" class="button" id="iar-logo-remove" <?php echo $attachment_id ? '' : 'style="display:none;"'; ?>>Remove Image</button>
-					</p>
+					<div class="iar-logo-actions">
+						<button type="button" class="iar-btn-media iar-btn-media--primary" id="iar-logo-select">
+							<span class="material-symbols-outlined">upload</span>
+							Select Image
+						</button>
+						<button
+							type="button"
+							class="iar-btn-media iar-btn-media--ghost"
+							id="iar-logo-remove"
+							<?php echo $attachment_id ? '' : 'style="display:none;"'; ?>
+						>
+							<span class="material-symbols-outlined">delete</span>
+							Remove
+						</button>
+					</div>
 				</div>
 			</div>
 
-			<?php submit_button( 'Save Settings' ); ?>
+			<div class="iar-save-bar">
+				<div class="iar-save-bar__status">
+					<span class="iar-save-bar__dot"></span>
+					<span>All changes saved.</span>
+				</div>
+				<div class="iar-save-bar__actions">
+					<button type="reset" class="iar-btn-discard">Discard</button>
+					<?php submit_button( 'Save Changes', 'primary', 'submit', false, [ 'class' => 'iar-btn-save' ] ); ?>
+				</div>
+			</div>
+
 		</form>
 	</div>
 
@@ -121,7 +148,7 @@ function iar_custom_login_logo_render_page(): void {
 					: attachment.url;
 
 				$input.val(attachment.id);
-				$preview.html('<img src="' + url + '" alt="Login logo preview" style="max-width: 320px; max-height: 120px;">');
+				$preview.html('<img src="' + url + '" alt="Login logo preview">');
 				$remove.show();
 			});
 
@@ -131,7 +158,12 @@ function iar_custom_login_logo_render_page(): void {
 		$remove.on('click', function(e) {
 			e.preventDefault();
 			$input.val('');
-			$preview.html('<p class="description">No custom logo selected. The default WordPress logo will be shown.</p>');
+			$preview.html(
+				'<div class="iar-logo-preview__empty">' +
+				'<span class="material-symbols-outlined">image</span>' +
+				'<span>No logo selected &mdash; WordPress default will be shown.</span>' +
+				'</div>'
+			);
 			$(this).hide();
 		});
 	})(jQuery);

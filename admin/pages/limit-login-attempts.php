@@ -75,77 +75,94 @@ function iar_limit_login_attempts_render_page(): void {
 	$lockout_duration = $options['lockout_duration'];
 	$lockout_message  = $options['lockout_message'];
 	?>
-	<div class="wrap iar-admin-wrap">
-		<h1>Login Attempts <small style="font-size: .7rem;">Configure brute-force protection:</small></h1>
 
-		<?php settings_errors( 'iar_limit_login_attempts_options' ); ?>
+	<div class="wrap iar-wrap">
 
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_limit_login_attempts_group' ); ?>
 
-			<div class="iar-modules-grid">
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Max Attempts</h3>
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">block</span>
 					</div>
-
-					<p class="iar-card-desc">
-						Number of failed login attempts before lockout.
-					</p>
-
-					<p>
-						<input
-							type="number"
-							name="iar_limit_login_attempts_options[max_attempts]"
-							value="<?php echo esc_attr( $max_attempts ); ?>"
-							min="1"
-							max="100"
-							class="small-text"
-						>
-					</p>
+					<span class="iar-section-heading__label">Protection Settings</span>
 				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Lockout Duration</h3>
+				<div class="iar-field-list">
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--rose">password</span>
+							<div>
+								<div class="iar-field-row__label">Max Attempts</div>
+								<div class="iar-field-row__desc">Failed logins before lockout (1&ndash;100).</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<div class="iar-input-suffix">
+								<input
+									type="number"
+									name="iar_limit_login_attempts_options[max_attempts]"
+									value="<?php echo esc_attr( $max_attempts ); ?>"
+									min="1"
+									max="100"
+									class="iar-input-number"
+								>
+								<span>attempts</span>
+							</div>
+						</div>
 					</div>
-
-					<p class="iar-card-desc">
-						How long (in minutes) an IP is blocked after exceeding max attempts.
-					</p>
-
-					<p>
-						<input
-							type="number"
-							name="iar_limit_login_attempts_options[lockout_duration]"
-							value="<?php echo esc_attr( $lockout_duration ); ?>"
-							min="1"
-							max="1440"
-							class="small-text"
-						> minutes
-					</p>
-				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Lockout Message</h3>
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--amber">timer</span>
+							<div>
+								<div class="iar-field-row__label">Lockout Duration</div>
+								<div class="iar-field-row__desc">How long the IP is blocked after exceeding max attempts.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<div class="iar-input-suffix">
+								<input
+									type="number"
+									name="iar_limit_login_attempts_options[lockout_duration]"
+									value="<?php echo esc_attr( $lockout_duration ); ?>"
+									min="1"
+									max="1440"
+									class="iar-input-number"
+								>
+								<span>minutes</span>
+							</div>
+						</div>
 					</div>
-
-					<p class="iar-card-desc">
-						Message shown to locked out users. Use <code>%d</code> for remaining minutes.
-					</p>
-
-					<p>
-						<textarea
-							name="iar_limit_login_attempts_options[lockout_message]"
-							rows="3"
-							class="large-text"
-						><?php echo esc_textarea( $lockout_message ); ?></textarea>
-					</p>
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--slate">chat</span>
+							<div>
+								<div class="iar-field-row__label">Lockout Message</div>
+								<div class="iar-field-row__desc">Shown to blocked users. Use <code>%d</code> for remaining minutes.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<textarea
+								name="iar_limit_login_attempts_options[lockout_message]"
+								rows="3"
+								class="iar-textarea"
+							><?php echo esc_textarea( $lockout_message ); ?></textarea>
+						</div>
+					</div>
 				</div>
 			</div>
 
-			<?php submit_button( 'Save Settings' ); ?>
+			<div class="iar-save-bar">
+				<div class="iar-save-bar__status">
+					<span class="iar-save-bar__dot"></span>
+					<span>All changes saved.</span>
+				</div>
+				<div class="iar-save-bar__actions">
+					<button type="reset" class="iar-btn-discard">Discard</button>
+					<?php submit_button( 'Save Changes', 'primary', 'submit', false, [ 'class' => 'iar-btn-save' ] ); ?>
+				</div>
+			</div>
+
 		</form>
 	</div>
 	<?php

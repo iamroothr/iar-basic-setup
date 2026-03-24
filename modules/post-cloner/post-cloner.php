@@ -91,7 +91,17 @@ function iar_post_cloner_handle_clone(): void {
 		wp_die( $new_post_id->get_error_message() );
 	}
 
-	wp_redirect( admin_url( 'post.php?action=edit&post=' . $new_post_id ) );
+	$cloner_options = get_option( 'iar_post_cloner_options', [] );
+
+	if ( ! empty( $cloner_options['always_open'] ) ) {
+		wp_redirect( admin_url( 'post.php?action=edit&post=' . $new_post_id ) );
+	} else {
+		$list_url = 'page' === $post->post_type
+			? admin_url( 'edit.php?post_type=page' )
+			: add_query_arg( 'post_type', $post->post_type, admin_url( 'edit.php' ) );
+		wp_redirect( $list_url );
+	}
+
 	exit;
 }
 

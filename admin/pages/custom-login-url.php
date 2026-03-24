@@ -78,80 +78,110 @@ function iar_custom_login_url_render_page(): void {
 	$options           = get_option( 'iar_custom_login_url_options', [] );
 	$login_path        = isset( $options['login_path'] ) ? $options['login_path'] : '';
 	$redirect_behavior = isset( $options['redirect_behavior'] ) ? $options['redirect_behavior'] : '404';
-	?>
-	<div class="wrap iar-admin-wrap">
-		<h1>Custom Login URL <small style="font-size: .7rem;">Configure your login path:</small></h1>
 
-		<?php settings_errors( 'iar_custom_login_url_options' ); ?>
+	$errors = get_settings_errors( 'iar_custom_login_url_options' );
+	?>
+
+	<div class="wrap iar-wrap">
+
+		<?php foreach ( $errors as $error ) : ?>
+			<div class="iar-notice iar-notice--<?php echo 'error' === $error['type'] ? 'error' : 'warning'; ?>">
+				<span class="material-symbols-outlined"><?php echo 'error' === $error['type'] ? 'error' : 'warning'; ?></span>
+				<div><?php echo wp_kses_post( $error['message'] ); ?></div>
+			</div>
+		<?php endforeach; ?>
 
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_custom_login_url_group' ); ?>
 
-			<div class="iar-modules-grid">
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Custom Login Path</h3>
+			<!-- Login Path -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">link</span>
 					</div>
-
-					<p class="iar-card-desc">
-						<label for="iar-login-path">
-							<?php echo esc_html( home_url( '/' ) ); ?>
-						</label>
-					</p>
-
-					<p>
-						<input
-							type="text"
-							id="iar-login-path"
-							name="iar_custom_login_url_options[login_path]"
-							value="<?php echo esc_attr( $login_path ); ?>"
-							class="regular-text"
-							placeholder="my-login"
-						>
-					</p>
-
-					<p class="description">
-						Use only lowercase letters, numbers, and hyphens. Leave empty to use the default <code>/wp-login.php</code>.
-					</p>
+					<span class="iar-section-heading__label">Login Path</span>
 				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Redirect Behavior</h3>
+				<div class="iar-field-list">
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--sky">edit</span>
+							<div>
+								<div class="iar-field-row__label">Custom Path</div>
+								<div class="iar-field-row__desc">Lowercase letters, numbers, hyphens only. Leave empty to keep <code>/wp-login.php</code>.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<div class="iar-input-with-prefix">
+								<span class="iar-input-prefix"><?php echo esc_html( trailingslashit( home_url() ) ); ?></span>
+								<input
+									type="text"
+									id="iar-login-path"
+									name="iar_custom_login_url_options[login_path]"
+									value="<?php echo esc_attr( $login_path ); ?>"
+									class="iar-input"
+									placeholder="my-login"
+								>
+							</div>
+						</div>
 					</div>
-
-					<p class="iar-card-desc">
-						What happens when someone visits <code>/wp-login.php</code> directly.
-					</p>
-
-					<fieldset>
-						<p>
-							<label>
-								<input
-									type="radio"
-									name="iar_custom_login_url_options[redirect_behavior]"
-									value="404"
-									<?php checked( $redirect_behavior, '404' ); ?>
-								>
-								Show a 404 (Not Found) page
-							</label>
-						</p>
-						<p>
-							<label>
-								<input
-									type="radio"
-									name="iar_custom_login_url_options[redirect_behavior]"
-									value="home"
-									<?php checked( $redirect_behavior, 'home' ); ?>
-								>
-								Redirect to homepage
-							</label>
-						</p>
-					</fieldset>
 				</div>
 			</div>
 
-			<?php submit_button( 'Save Settings' ); ?>
+			<!-- Redirect Behavior -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">arrow_forward</span>
+					</div>
+					<span class="iar-section-heading__label">Redirect Behavior</span>
+				</div>
+				<div class="iar-field-list">
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--amber">manage_accounts</span>
+							<div>
+								<div class="iar-field-row__label">When <code>/wp-login.php</code> is accessed directly</div>
+								<div class="iar-field-row__desc">What happens when someone visits the old login URL.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<div class="iar-radio-group">
+								<label class="iar-radio-label">
+									<input
+										type="radio"
+										name="iar_custom_login_url_options[redirect_behavior]"
+										value="404"
+										<?php checked( $redirect_behavior, '404' ); ?>
+									>
+									Show a 404 (Not Found) page
+								</label>
+								<label class="iar-radio-label">
+									<input
+										type="radio"
+										name="iar_custom_login_url_options[redirect_behavior]"
+										value="home"
+										<?php checked( $redirect_behavior, 'home' ); ?>
+									>
+									Redirect to homepage
+								</label>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="iar-save-bar">
+				<div class="iar-save-bar__status">
+					<span class="iar-save-bar__dot"></span>
+					<span>All changes saved.</span>
+				</div>
+				<div class="iar-save-bar__actions">
+					<button type="reset" class="iar-btn-discard">Discard</button>
+					<?php submit_button( 'Save Changes', 'primary', 'submit', false, [ 'class' => 'iar-btn-save' ] ); ?>
+				</div>
+			</div>
+
 		</form>
 	</div>
 	<?php

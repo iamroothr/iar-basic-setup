@@ -65,19 +65,29 @@ function iar_maintenance_mode_render_page(): void {
 	$page_title = $options['page_title'];
 	$message    = $options['message'];
 	?>
-	<div class="wrap iar-admin-wrap">
-		<h1>Maintenance Mode <small style="font-size: .7rem;">Configure maintenance page:</small></h1>
 
-		<?php settings_errors( 'iar_maintenance_mode_options' ); ?>
+	<div class="wrap iar-wrap">
 
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_maintenance_mode_group' ); ?>
 
-			<div class="iar-modules-grid">
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Enable Maintenance Mode</h3>
-
+			<!-- Status -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">construction</span>
+					</div>
+					<span class="iar-section-heading__label">Status</span>
+				</div>
+				<div class="iar-module-list">
+					<div class="iar-module-row">
+						<div class="iar-module-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--amber">construction</span>
+							<div class="iar-module-info">
+								<h4>Enable Maintenance Mode</h4>
+								<p>Non-admin visitors will see the maintenance page.</p>
+							</div>
+						</div>
 						<label class="iar-toggle">
 							<input
 								type="checkbox"
@@ -85,54 +95,70 @@ function iar_maintenance_mode_render_page(): void {
 								value="1"
 								<?php checked( $enabled ); ?>
 							>
-							<span class="iar-slider"></span>
+							<div class="iar-toggle-track"><div class="iar-toggle-dot"></div></div>
 						</label>
 					</div>
-
-					<p class="iar-card-desc">
-						When enabled, non-admin visitors see the maintenance page.
-					</p>
-				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Page Title</h3>
-					</div>
-
-					<p class="iar-card-desc">
-						Title displayed on the maintenance page.
-					</p>
-
-					<p>
-						<input
-							type="text"
-							name="iar_maintenance_mode_options[page_title]"
-							value="<?php echo esc_attr( $page_title ); ?>"
-							class="regular-text"
-						>
-					</p>
-				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Message</h3>
-					</div>
-
-					<p class="iar-card-desc">
-						Message displayed to visitors. Basic HTML is allowed.
-					</p>
-
-					<p>
-						<textarea
-							name="iar_maintenance_mode_options[message]"
-							rows="4"
-							class="large-text"
-						><?php echo esc_textarea( $message ); ?></textarea>
-					</p>
 				</div>
 			</div>
 
-			<?php submit_button( 'Save Settings' ); ?>
+			<!-- Page Content -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">edit_note</span>
+					</div>
+					<span class="iar-section-heading__label">Page Content</span>
+				</div>
+				<div class="iar-field-list">
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--sky">title</span>
+							<div>
+								<div class="iar-field-row__label">Page Title</div>
+								<div class="iar-field-row__desc">Browser tab title on the maintenance page.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<input
+								type="text"
+								name="iar_maintenance_mode_options[page_title]"
+								value="<?php echo esc_attr( $page_title ); ?>"
+								class="iar-input"
+								placeholder="Under Maintenance"
+							>
+						</div>
+					</div>
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--slate">article</span>
+							<div>
+								<div class="iar-field-row__label">Message</div>
+								<div class="iar-field-row__desc">Shown to visitors. Basic HTML allowed.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<textarea
+								name="iar_maintenance_mode_options[message]"
+								rows="4"
+								class="iar-textarea"
+								placeholder="We&rsquo;ll be back soon."
+							><?php echo esc_textarea( $message ); ?></textarea>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="iar-save-bar">
+				<div class="iar-save-bar__status">
+					<span class="iar-save-bar__dot"></span>
+					<span>All changes saved.</span>
+				</div>
+				<div class="iar-save-bar__actions">
+					<button type="reset" class="iar-btn-discard">Discard</button>
+					<?php submit_button( 'Save Changes', 'primary', 'submit', false, [ 'class' => 'iar-btn-save' ] ); ?>
+				</div>
+			</div>
+
 		</form>
 	</div>
 	<?php

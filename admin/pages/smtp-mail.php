@@ -97,19 +97,19 @@ function iar_smtp_mail_render_page(): void {
 		'iar_smtp_test_email'
 	);
 	?>
-	<div class="wrap iar-admin-wrap">
-		<h1>SMTP Mail <small style="font-size: .7rem;">Configure email delivery:</small></h1>
 
-		<?php settings_errors( 'iar_smtp_mail_options' ); ?>
+	<div class="wrap iar-wrap">
 
 		<?php if ( isset( $_GET['iar_smtp_test'] ) ) : ?>
 			<?php if ( 'success' === $_GET['iar_smtp_test'] ) : ?>
-				<div class="notice notice-success is-dismissible">
-					<p><?php esc_html_e( 'Test email sent successfully! Check your inbox.', 'iar-basic-setup' ); ?></p>
+				<div class="iar-notice iar-notice--success">
+					<span class="material-symbols-outlined">check_circle</span>
+					<div><?php esc_html_e( 'Test email sent successfully! Check your inbox.', 'iar-basic-setup' ); ?></div>
 				</div>
 			<?php else : ?>
-				<div class="notice notice-error is-dismissible">
-					<p><?php esc_html_e( 'Failed to send test email. Please check your SMTP settings.', 'iar-basic-setup' ); ?></p>
+				<div class="iar-notice iar-notice--error">
+					<span class="material-symbols-outlined">error</span>
+					<div><?php esc_html_e( 'Failed to send test email. Please check your SMTP settings.', 'iar-basic-setup' ); ?></div>
 				</div>
 			<?php endif; ?>
 		<?php endif; ?>
@@ -117,98 +117,97 @@ function iar_smtp_mail_render_page(): void {
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_smtp_mail_group' ); ?>
 
-			<div class="iar-modules-grid">
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>SMTP Host</h3>
+			<!-- Server -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">dns</span>
 					</div>
-
-					<p class="iar-card-desc">
-						SMTP server address (e.g., smtp.gmail.com).
-					</p>
-
-					<p>
-						<input
-							type="text"
-							name="iar_smtp_mail_options[host]"
-							value="<?php echo esc_attr( $host ); ?>"
-							class="regular-text"
-							placeholder="smtp.example.com"
-						>
-					</p>
+					<span class="iar-section-heading__label">Server</span>
 				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>SMTP Port</h3>
+				<div class="iar-field-list">
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--sky">language</span>
+							<div>
+								<div class="iar-field-row__label">SMTP Host</div>
+								<div class="iar-field-row__desc">Server address (e.g. smtp.gmail.com).</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<input
+								type="text"
+								name="iar_smtp_mail_options[host]"
+								value="<?php echo esc_attr( $host ); ?>"
+								class="iar-input"
+								placeholder="smtp.example.com"
+							>
+						</div>
 					</div>
-
-					<p class="iar-card-desc">
-						Port number (typically 587 for TLS, 465 for SSL, 25 for none).
-					</p>
-
-					<p>
-						<input
-							type="number"
-							name="iar_smtp_mail_options[port]"
-							value="<?php echo esc_attr( $port ); ?>"
-							class="small-text"
-							min="1"
-							max="65535"
-						>
-					</p>
-				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Encryption</h3>
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--slate">settings_ethernet</span>
+							<div>
+								<div class="iar-field-row__label">Port</div>
+								<div class="iar-field-row__desc">587 for TLS &bull; 465 for SSL &bull; 25 for none.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<input
+								type="number"
+								name="iar_smtp_mail_options[port]"
+								value="<?php echo esc_attr( $port ); ?>"
+								min="1"
+								max="65535"
+								class="iar-input-number"
+							>
+						</div>
 					</div>
-
-					<p class="iar-card-desc">
-						Connection security method.
-					</p>
-
-					<fieldset>
-						<p>
-							<label>
-								<input
-									type="radio"
-									name="iar_smtp_mail_options[encryption]"
-									value="none"
-									<?php checked( $encryption, 'none' ); ?>
-								>
-								None
-							</label>
-						</p>
-						<p>
-							<label>
-								<input
-									type="radio"
-									name="iar_smtp_mail_options[encryption]"
-									value="ssl"
-									<?php checked( $encryption, 'ssl' ); ?>
-								>
-								SSL
-							</label>
-						</p>
-						<p>
-							<label>
-								<input
-									type="radio"
-									name="iar_smtp_mail_options[encryption]"
-									value="tls"
-									<?php checked( $encryption, 'tls' ); ?>
-								>
-								TLS
-							</label>
-						</p>
-					</fieldset>
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--indigo">lock</span>
+							<div>
+								<div class="iar-field-row__label">Encryption</div>
+								<div class="iar-field-row__desc">Connection security method.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<div class="iar-radio-group">
+								<label class="iar-radio-label">
+									<input type="radio" name="iar_smtp_mail_options[encryption]" value="tls" <?php checked( $encryption, 'tls' ); ?>>
+									TLS (recommended)
+								</label>
+								<label class="iar-radio-label">
+									<input type="radio" name="iar_smtp_mail_options[encryption]" value="ssl" <?php checked( $encryption, 'ssl' ); ?>>
+									SSL
+								</label>
+								<label class="iar-radio-label">
+									<input type="radio" name="iar_smtp_mail_options[encryption]" value="none" <?php checked( $encryption, 'none' ); ?>>
+									None
+								</label>
+							</div>
+						</div>
+					</div>
 				</div>
+			</div>
 
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Authentication</h3>
-
+			<!-- Authentication -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">key</span>
+					</div>
+					<span class="iar-section-heading__label">Authentication</span>
+				</div>
+				<div class="iar-module-list">
+					<div class="iar-module-row">
+						<div class="iar-module-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--amber">verified_user</span>
+							<div class="iar-module-info">
+								<h4>Enable Authentication</h4>
+								<p>Required if your SMTP server needs a username and password.</p>
+							</div>
+						</div>
 						<label class="iar-toggle">
 							<input
 								type="checkbox"
@@ -216,110 +215,131 @@ function iar_smtp_mail_render_page(): void {
 								value="1"
 								<?php checked( $auth ); ?>
 							>
-							<span class="iar-slider"></span>
+							<div class="iar-toggle-track"><div class="iar-toggle-dot"></div></div>
 						</label>
 					</div>
-
-					<p class="iar-card-desc">
-						Enable if your SMTP server requires authentication.
-					</p>
 				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Username</h3>
+				<div class="iar-field-list" style="margin-top: .75rem;">
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--slate">person</span>
+							<div>
+								<div class="iar-field-row__label">Username</div>
+								<div class="iar-field-row__desc">SMTP authentication username.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<input
+								type="text"
+								name="iar_smtp_mail_options[username]"
+								value="<?php echo esc_attr( $username ); ?>"
+								class="iar-input"
+								autocomplete="off"
+							>
+						</div>
 					</div>
-
-					<p class="iar-card-desc">
-						SMTP authentication username.
-					</p>
-
-					<p>
-						<input
-							type="text"
-							name="iar_smtp_mail_options[username]"
-							value="<?php echo esc_attr( $username ); ?>"
-							class="regular-text"
-							autocomplete="off"
-						>
-					</p>
-				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>Password</h3>
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--slate">password</span>
+							<div>
+								<div class="iar-field-row__label">Password</div>
+								<div class="iar-field-row__desc">SMTP authentication password.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<input
+								type="password"
+								name="iar_smtp_mail_options[password]"
+								value="<?php echo esc_attr( $password ); ?>"
+								class="iar-input"
+								autocomplete="new-password"
+							>
+						</div>
 					</div>
-
-					<p class="iar-card-desc">
-						SMTP authentication password.
-					</p>
-
-					<p>
-						<input
-							type="password"
-							name="iar_smtp_mail_options[password]"
-							value="<?php echo esc_attr( $password ); ?>"
-							class="regular-text"
-							autocomplete="new-password"
-						>
-					</p>
-				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>From Email</h3>
-					</div>
-
-					<p class="iar-card-desc">
-						Override the default From email address. Leave empty to use WordPress default.
-					</p>
-
-					<p>
-						<input
-							type="email"
-							name="iar_smtp_mail_options[from_email]"
-							value="<?php echo esc_attr( $from_email ); ?>"
-							class="regular-text"
-							placeholder="noreply@example.com"
-						>
-					</p>
-				</div>
-
-				<div class="iar-card">
-					<div class="iar-card-header">
-						<h3>From Name</h3>
-					</div>
-
-					<p class="iar-card-desc">
-						Override the default From name. Leave empty to use WordPress default.
-					</p>
-
-					<p>
-						<input
-							type="text"
-							name="iar_smtp_mail_options[from_name]"
-							value="<?php echo esc_attr( $from_name ); ?>"
-							class="regular-text"
-							placeholder="My Website"
-						>
-					</p>
 				</div>
 			</div>
 
-			<?php submit_button( 'Save Settings' ); ?>
+			<!-- Sender -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">person</span>
+					</div>
+					<span class="iar-section-heading__label">Sender</span>
+				</div>
+				<div class="iar-field-list">
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--sky">alternate_email</span>
+							<div>
+								<div class="iar-field-row__label">From Email</div>
+								<div class="iar-field-row__desc">Leave empty to use WordPress default.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<input
+								type="email"
+								name="iar_smtp_mail_options[from_email]"
+								value="<?php echo esc_attr( $from_email ); ?>"
+								class="iar-input"
+								placeholder="noreply@example.com"
+							>
+						</div>
+					</div>
+					<div class="iar-field-row">
+						<div class="iar-field-row__left">
+							<span class="material-symbols-outlined iar-module-icon iar-module-icon--sky">badge</span>
+							<div>
+								<div class="iar-field-row__label">From Name</div>
+								<div class="iar-field-row__desc">Leave empty to use WordPress default.</div>
+							</div>
+						</div>
+						<div class="iar-field-row__control">
+							<input
+								type="text"
+								name="iar_smtp_mail_options[from_name]"
+								value="<?php echo esc_attr( $from_name ); ?>"
+								class="iar-input"
+								placeholder="My Website"
+							>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="iar-save-bar">
+				<div class="iar-save-bar__status">
+					<span class="iar-save-bar__dot"></span>
+					<span>All changes saved.</span>
+				</div>
+				<div class="iar-save-bar__actions">
+					<button type="reset" class="iar-btn-discard">Discard</button>
+					<?php submit_button( 'Save Changes', 'primary', 'submit', false, [ 'class' => 'iar-btn-save' ] ); ?>
+				</div>
+			</div>
+
 		</form>
 
-		<hr>
+		<!-- Test Email (outside form) -->
+		<div class="iar-section" style="margin-top: 2.5rem;">
+			<div class="iar-section-heading">
+				<div class="iar-section-heading__icon">
+					<span class="material-symbols-outlined">send</span>
+				</div>
+				<span class="iar-section-heading__label">Test Email</span>
+			</div>
+			<div class="iar-action-panel">
+				<div class="iar-action-panel__info">
+					<h4>Send Test Email</h4>
+					<p>Sends a test message to your admin email address to verify SMTP settings.</p>
+				</div>
+				<a href="<?php echo esc_url( $test_nonce_url ); ?>" class="iar-btn-action">
+					<span class="material-symbols-outlined">send</span>
+					Send Test
+				</a>
+			</div>
+		</div>
 
-		<h2><?php esc_html_e( 'Test Email', 'iar-basic-setup' ); ?></h2>
-		<p class="description">
-			<?php esc_html_e( 'Send a test email to your admin email address to verify SMTP settings.', 'iar-basic-setup' ); ?>
-		</p>
-		<p>
-			<a href="<?php echo esc_url( $test_nonce_url ); ?>" class="button button-secondary">
-				<?php esc_html_e( 'Send Test Email', 'iar-basic-setup' ); ?>
-			</a>
-		</p>
 	</div>
 	<?php
 }
