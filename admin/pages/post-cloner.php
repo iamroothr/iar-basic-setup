@@ -1,81 +1,129 @@
 <?php
 if ( ! defined( 'ABSPATH' ) ) {
-    exit;
+	exit;
 }
 
 /**
  * Add Post Cloner submenu (only when module is enabled)
  */
 add_action( 'admin_menu', function () {
-    $options = get_option( 'iar_basic_setup_options', [] );
+	$options = get_option( 'iar_basic_setup_options', [] );
 
-    if ( ! empty( $options['post-cloner'] ) ) {
-        add_submenu_page(
-                'iar-basic-setup-settings',
-                'Post Cloner',
-                'Post Cloner',
-                'manage_options',
-                'iar-post-cloner',
-                'iar_post_cloner_render_page'
-        );
-    }
+	if ( ! empty( $options['post-cloner'] ) ) {
+		add_submenu_page(
+			'iar-basic-setup-settings',
+			'Post Cloner',
+			'Post Cloner',
+			'manage_options',
+			'iar-post-cloner',
+			'iar_post_cloner_render_page'
+		);
+	}
 } );
 
 /**
  * Register settings
  */
 add_action( 'admin_init', function () {
-    register_setting( 'iar_post_cloner_group', 'iar_post_cloner_options' );
+	register_setting( 'iar_post_cloner_group', 'iar_post_cloner_options' );
 } );
 
 /**
  * Render Post Cloner page
  */
 function iar_post_cloner_render_page(): void {
-    if ( ! current_user_can( 'manage_options' ) ) {
-        return;
-    }
+	if ( ! current_user_can( 'manage_options' ) ) {
+		return;
+	}
 
-    $options    = get_option( 'iar_post_cloner_options', [] );
-    $post_types = get_post_types( [ 'show_ui' => true ], 'objects' );
+	$options    = get_option( 'iar_post_cloner_options', [] );
+	$post_types = get_post_types( [ 'show_ui' => true ], 'objects' );
+	unset( $post_types['attachment'] );
 
-    // Remove attachment from the list
-    unset( $post_types['attachment'] );
-    ?>
-    <div class="wrap iar-admin-wrap">
-        <h1>Post Cloner <small style="font-size: .7rem;">Select which post types can be cloned:</small></h1>
+	$always_open = ! empty( $options['always_open'] );
+	?>
 
-        <form method="post" action="options.php">
-            <?php settings_fields( 'iar_post_cloner_group' ); ?>
+	<div class="wrap iar-wrap">
 
-            <div class="iar-modules-grid">
-                <?php foreach ( $post_types as $post_type ) :
-                    $enabled = ! empty( $options['post_types'][ $post_type->name ] );
-                    ?>
-                    <div class="iar-card">
-                        <div class="iar-card-header">
-                            <h3><?php echo esc_html( $post_type->labels->singular_name ); ?></h3>
+		<form method="post" action="options.php">
+			<?php settings_fields( 'iar_post_cloner_group' ); ?>
 
-                            <label class="iar-toggle">
-                                <input
-                                        type="checkbox"
-                                        name="iar_post_cloner_options[post_types][<?php echo esc_attr( $post_type->name ); ?>]"
-                                        value="1"
-                                        <?php checked( $enabled ); ?>
-                                >
-                                <span class="iar-slider"></span>
-                            </label>
-                        </div>
+			<!-- Behaviour -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">tune</span>
+					</div>
+					<span class="iar-section-heading__label">Behaviour</span>
+				</div>
+				<div class="iar-module-list">
+					<div class="iar-module-row">
+						<div class="iar-module-row__left">
+							<span class="material-symbols-outlined iar-module-icon">open_in_new</span>
+							<div class="iar-module-info">
+								<h4>Open Cloned Post Immediately</h4>
+								<p>After cloning, open the new draft in the editor instead of returning to the post list.</p>
+							</div>
+						</div>
+						<label class="iar-toggle">
+							<input
+								type="checkbox"
+								name="iar_post_cloner_options[always_open]"
+								value="1"
+								<?php checked( $always_open ); ?>
+							>
+							<div class="iar-toggle-track"><div class="iar-toggle-dot"></div></div>
+						</label>
+					</div>
+				</div>
+			</div>
 
-                        <p class="iar-card-desc">
-                            <?php echo esc_html( $post_type->labels->name ); ?> (<?php echo esc_html( $post_type->name ); ?>)
-                        </p>
-                    </div>
-                <?php endforeach; ?>
-            </div>
+			<!-- Enabled Post Types -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">category</span>
+					</div>
+					<span class="iar-section-heading__label">Enabled Post Types</span>
+				</div>
+				<div class="iar-module-list">
+					<?php foreach ( $post_types as $post_type ) :
+						$enabled = ! empty( $options['post_types'][ $post_type->name ] );
+						?>
+						<div class="iar-module-row">
+							<div class="iar-module-row__left">
+								<span class="material-symbols-outlined iar-module-icon">article</span>
+								<div class="iar-module-info">
+									<h4><?php echo esc_html( $post_type->labels->singular_name ); ?></h4>
+									<p><?php echo esc_html( $post_type->labels->name ); ?> &mdash; <code><?php echo esc_html( $post_type->name ); ?></code></p>
+								</div>
+							</div>
+							<label class="iar-toggle">
+								<input
+									type="checkbox"
+									name="iar_post_cloner_options[post_types][<?php echo esc_attr( $post_type->name ); ?>]"
+									value="1"
+									<?php checked( $enabled ); ?>
+								>
+								<div class="iar-toggle-track"><div class="iar-toggle-dot"></div></div>
+							</label>
+						</div>
+					<?php endforeach; ?>
+				</div>
+			</div>
 
-            <?php submit_button( 'Save Settings' ); ?>
-        </form>
-    </div>
-    <?php
+			<div class="iar-save-bar">
+				<div class="iar-save-bar__status">
+					<span class="iar-save-bar__dot"></span>
+					<span>All changes saved.</span>
+				</div>
+				<div class="iar-save-bar__actions">
+					<button type="reset" class="iar-btn-discard">Discard</button>
+					<?php submit_button( 'Save Changes', 'primary', 'submit', false, [ 'class' => 'iar-btn-save' ] ); ?>
+				</div>
+			</div>
+
+		</form>
+	</div>
+	<?php
 }
