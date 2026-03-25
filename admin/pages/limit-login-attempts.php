@@ -81,6 +81,15 @@ function iar_limit_login_attempts_render_page(): void {
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_limit_login_attempts_group' ); ?>
 
+			<!-- Page Header -->
+			<div class="iar-page-header">
+				<div class="iar-page-header__text">
+					<h2 class="iar-page-title">Limit Login Attempts</h2>
+					<p class="iar-page-subtitle">Blocks an IP address after failed login attempts.</p>
+				</div>
+				<span class="iar-system-badge">System Active</span>
+			</div>
+
 			<div class="iar-section">
 				<div class="iar-section-heading">
 					<div class="iar-section-heading__icon">
@@ -88,6 +97,7 @@ function iar_limit_login_attempts_render_page(): void {
 					</div>
 					<span class="iar-section-heading__label">Protection Settings</span>
 				</div>
+				<div class="iar-section--card">
 				<div class="iar-field-list">
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
@@ -149,6 +159,7 @@ function iar_limit_login_attempts_render_page(): void {
 							><?php echo esc_textarea( $lockout_message ); ?></textarea>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 

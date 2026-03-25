@@ -34,6 +34,15 @@ function iar_duplicate_menu_render_page(): void {
 
 	<div class="wrap iar-wrap">
 
+		<!-- Page Header -->
+		<div class="iar-page-header">
+			<div class="iar-page-header__text">
+				<h2 class="iar-page-title">Duplicate Menu</h2>
+				<p class="iar-page-subtitle">Adds a Duplicate action to clone nav menus with all items.</p>
+			</div>
+			<span class="iar-system-badge">System Active</span>
+		</div>
+
 		<?php if ( isset( $_GET['iar_menu_duplicated'] ) && 1 === absint( $_GET['iar_menu_duplicated'] ) ) : ?>
 			<div class="iar-notice iar-notice--success">
 				<span class="material-symbols-outlined">check_circle</span>
@@ -59,6 +68,7 @@ function iar_duplicate_menu_render_page(): void {
 						</div>
 						<span class="iar-section-heading__label">Clone Menu</span>
 					</div>
+					<div class="iar-section--card">
 					<div class="iar-field-list">
 						<div class="iar-field-row">
 							<div class="iar-field-row__left">
@@ -95,6 +105,7 @@ function iar_duplicate_menu_render_page(): void {
 								>
 							</div>
 						</div>
+					</div>
 					</div>
 				</div>
 

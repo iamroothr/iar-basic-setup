@@ -88,6 +88,15 @@ function iar_enable_debug_render_page(): void {
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_enable_debug_group' ); ?>
 
+			<!-- Page Header -->
+			<div class="iar-page-header">
+				<div class="iar-page-header__text">
+					<h2 class="iar-page-title">Enable Debug Mode</h2>
+					<p class="iar-page-subtitle">Enables error reporting, display, and logging for troubleshooting.</p>
+				</div>
+				<span class="iar-system-badge">System Active</span>
+			</div>
+
 			<div class="iar-section">
 				<div class="iar-section-heading">
 					<div class="iar-section-heading__icon">
