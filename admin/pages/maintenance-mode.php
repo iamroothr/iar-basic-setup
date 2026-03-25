@@ -71,6 +71,15 @@ function iar_maintenance_mode_render_page(): void {
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_maintenance_mode_group' ); ?>
 
+			<!-- Page Header -->
+			<div class="iar-page-header">
+				<div class="iar-page-header__text">
+					<h2 class="iar-page-title">Maintenance Mode</h2>
+					<p class="iar-page-subtitle">Displays a maintenance page for non-admin visitors.</p>
+				</div>
+				<span class="iar-system-badge">System Active</span>
+			</div>
+
 			<!-- Status -->
 			<div class="iar-section">
 				<div class="iar-section-heading">
@@ -79,6 +88,7 @@ function iar_maintenance_mode_render_page(): void {
 					</div>
 					<span class="iar-section-heading__label">Status</span>
 				</div>
+				<div class="iar-section--card">
 				<div class="iar-module-list">
 					<div class="iar-module-row">
 						<div class="iar-module-row__left">
@@ -99,6 +109,7 @@ function iar_maintenance_mode_render_page(): void {
 						</label>
 					</div>
 				</div>
+				</div>
 			</div>
 
 			<!-- Page Content -->
@@ -109,6 +120,7 @@ function iar_maintenance_mode_render_page(): void {
 					</div>
 					<span class="iar-section-heading__label">Page Content</span>
 				</div>
+				<div class="iar-section--card">
 				<div class="iar-field-list">
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
@@ -145,6 +157,7 @@ function iar_maintenance_mode_render_page(): void {
 							><?php echo esc_textarea( $message ); ?></textarea>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 

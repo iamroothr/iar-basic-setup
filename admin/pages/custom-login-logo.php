@@ -60,6 +60,15 @@ function iar_custom_login_logo_render_page(): void {
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_custom_login_logo_group' ); ?>
 
+			<!-- Page Header -->
+			<div class="iar-page-header">
+				<div class="iar-page-header__text">
+					<h2 class="iar-page-title">Custom Login Logo</h2>
+					<p class="iar-page-subtitle">Replaces the WordPress logo on the login page with a custom image.</p>
+				</div>
+				<span class="iar-system-badge">System Active</span>
+			</div>
+
 			<div class="iar-section">
 				<div class="iar-section-heading">
 					<div class="iar-section-heading__icon">
@@ -67,8 +76,8 @@ function iar_custom_login_logo_render_page(): void {
 					</div>
 					<span class="iar-section-heading__label">Logo Image</span>
 				</div>
-
-				<div class="iar-logo-panel">
+				<div class="iar-section--card">
+				<div class="iar-logo-panel__body">
 					<div id="iar-logo-preview" class="iar-logo-preview">
 						<?php if ( $image_url ) : ?>
 							<img src="<?php echo esc_url( $image_url ); ?>" alt="Login logo preview">
@@ -103,6 +112,7 @@ function iar_custom_login_logo_render_page(): void {
 						</button>
 					</div>
 				</div>
+			</div>
 			</div>
 
 			<div class="iar-save-bar">
@@ -160,8 +170,8 @@ function iar_custom_login_logo_render_page(): void {
 			$input.val('');
 			$preview.html(
 				'<div class="iar-logo-preview__empty">' +
-				'<span class="material-symbols-outlined">image</span>' +
-				'<span>No logo selected &mdash; WordPress default will be shown.</span>' +
+					'<span class="material-symbols-outlined">image</span>' +
+					'<span>No logo selected \u2014 WordPress default will be shown.</span>' +
 				'</div>'
 			);
 			$(this).hide();

@@ -94,6 +94,15 @@ function iar_custom_login_url_render_page(): void {
 		<form method="post" action="options.php">
 			<?php settings_fields( 'iar_custom_login_url_group' ); ?>
 
+			<!-- Page Header -->
+			<div class="iar-page-header">
+				<div class="iar-page-header__text">
+					<h2 class="iar-page-title">Custom Login URL</h2>
+					<p class="iar-page-subtitle">Replaces /wp-login.php with a custom path to reduce brute-force attacks.</p>
+				</div>
+				<span class="iar-system-badge">System Active</span>
+			</div>
+
 			<!-- Login Path -->
 			<div class="iar-section">
 				<div class="iar-section-heading">
@@ -102,6 +111,7 @@ function iar_custom_login_url_render_page(): void {
 					</div>
 					<span class="iar-section-heading__label">Login Path</span>
 				</div>
+				<div class="iar-section--card">
 				<div class="iar-field-list">
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
@@ -126,6 +136,7 @@ function iar_custom_login_url_render_page(): void {
 						</div>
 					</div>
 				</div>
+				</div>
 			</div>
 
 			<!-- Redirect Behavior -->
@@ -136,6 +147,7 @@ function iar_custom_login_url_render_page(): void {
 					</div>
 					<span class="iar-section-heading__label">Redirect Behavior</span>
 				</div>
+				<div class="iar-section--card">
 				<div class="iar-field-list">
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
@@ -168,6 +180,7 @@ function iar_custom_login_url_render_page(): void {
 							</div>
 						</div>
 					</div>
+				</div>
 				</div>
 			</div>
 
