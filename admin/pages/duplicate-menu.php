@@ -72,7 +72,6 @@ function iar_duplicate_menu_render_page(): void {
 					<div class="iar-field-list">
 						<div class="iar-field-row">
 							<div class="iar-field-row__left">
-								<span class="material-symbols-outlined iar-module-icon iar-module-icon--indigo">list</span>
 								<div>
 									<div class="iar-field-row__label">Source Menu</div>
 									<div class="iar-field-row__desc">Select the menu you want to duplicate.</div>
@@ -90,7 +89,6 @@ function iar_duplicate_menu_render_page(): void {
 						</div>
 						<div class="iar-field-row">
 							<div class="iar-field-row__left">
-								<span class="material-symbols-outlined iar-module-icon iar-module-icon--sky">title</span>
 								<div>
 									<div class="iar-field-row__label">New Menu Name</div>
 									<div class="iar-field-row__desc">Leave blank to use &ldquo;Original Name (Copy)&rdquo;.</div>

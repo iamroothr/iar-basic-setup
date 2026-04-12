@@ -101,7 +101,6 @@ function iar_limit_login_attempts_render_page(): void {
 				<div class="iar-field-list">
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
-							<span class="material-symbols-outlined iar-module-icon iar-module-icon--rose">password</span>
 							<div>
 								<div class="iar-field-row__label">Max Attempts</div>
 								<div class="iar-field-row__desc">Failed logins before lockout (1&ndash;100).</div>
@@ -123,7 +122,6 @@ function iar_limit_login_attempts_render_page(): void {
 					</div>
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
-							<span class="material-symbols-outlined iar-module-icon iar-module-icon--amber">timer</span>
 							<div>
 								<div class="iar-field-row__label">Lockout Duration</div>
 								<div class="iar-field-row__desc">How long the IP is blocked after exceeding max attempts.</div>
@@ -145,7 +143,6 @@ function iar_limit_login_attempts_render_page(): void {
 					</div>
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
-							<span class="material-symbols-outlined iar-module-icon iar-module-icon--slate">chat</span>
 							<div>
 								<div class="iar-field-row__label">Lockout Message</div>
 								<div class="iar-field-row__desc">Shown to blocked users. Use <code>%d</code> for remaining minutes.</div>

@@ -31,6 +31,17 @@ add_action( 'admin_init', function () {
 } );
 
 /**
+ * Enqueue media uploader on the maintenance mode settings page.
+ */
+add_action( 'admin_enqueue_scripts', function ( string $hook ) {
+	if ( 'iar-basic-setup_page_iar-maintenance-mode' !== $hook ) {
+		return;
+	}
+
+	wp_enqueue_media();
+} );
+
+/**
  * Sanitize options.
  *
  * @param mixed $input Raw form input.
@@ -49,6 +60,10 @@ function iar_maintenance_mode_sanitize( $input ): array {
 		? wp_kses_post( $input['message'] )
 		: '';
 
+	$sanitized['background_image'] = ! empty( $input['background_image'] )
+		? absint( $input['background_image'] )
+		: 0;
+
 	return $sanitized;
 }
 
@@ -60,10 +75,12 @@ function iar_maintenance_mode_render_page(): void {
 		return;
 	}
 
-	$options    = iar_maintenance_mode_get_options();
-	$enabled    = $options['enabled'];
-	$page_title = $options['page_title'];
-	$message    = $options['message'];
+	$options          = iar_maintenance_mode_get_options();
+	$enabled          = $options['enabled'];
+	$page_title       = $options['page_title'];
+	$message          = $options['message'];
+	$bg_image_id      = ! empty( $options['background_image'] ) ? absint( $options['background_image'] ) : 0;
+	$bg_image_url     = $bg_image_id ? wp_get_attachment_image_url( $bg_image_id, 'large' ) : '';
 	?>
 
 	<div class="wrap iar-wrap">
@@ -124,7 +141,6 @@ function iar_maintenance_mode_render_page(): void {
 				<div class="iar-field-list">
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
-							<span class="material-symbols-outlined iar-module-icon iar-module-icon--sky">title</span>
 							<div>
 								<div class="iar-field-row__label">Page Title</div>
 								<div class="iar-field-row__desc">Browser tab title on the maintenance page.</div>
@@ -142,7 +158,6 @@ function iar_maintenance_mode_render_page(): void {
 					</div>
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
-							<span class="material-symbols-outlined iar-module-icon iar-module-icon--slate">article</span>
 							<div>
 								<div class="iar-field-row__label">Message</div>
 								<div class="iar-field-row__desc">Shown to visitors. Basic HTML allowed.</div>
@@ -161,6 +176,53 @@ function iar_maintenance_mode_render_page(): void {
 				</div>
 			</div>
 
+			<!-- Background Image -->
+			<div class="iar-section">
+				<div class="iar-section-heading">
+					<div class="iar-section-heading__icon">
+						<span class="material-symbols-outlined">image</span>
+					</div>
+					<span class="iar-section-heading__label">Background Image</span>
+				</div>
+				<div class="iar-section--card">
+				<div class="iar-logo-panel__body">
+					<div id="iar-maintenance-bg-preview" class="iar-logo-preview iar-logo-preview--bg">
+						<?php if ( $bg_image_url ) : ?>
+							<img src="<?php echo esc_url( $bg_image_url ); ?>" alt="Background image preview">
+						<?php else : ?>
+							<div class="iar-logo-preview__empty">
+								<span class="material-symbols-outlined">image</span>
+								<span>No image selected &mdash; background will be plain.</span>
+							</div>
+						<?php endif; ?>
+					</div>
+
+					<input
+						type="hidden"
+						id="iar-maintenance-bg-id"
+						name="iar_maintenance_mode_options[background_image]"
+						value="<?php echo esc_attr( $bg_image_id ); ?>"
+					>
+
+					<div class="iar-logo-actions">
+						<button type="button" class="iar-btn-media iar-btn-media--primary" id="iar-maintenance-bg-select">
+							<span class="material-symbols-outlined">upload</span>
+							Select Image
+						</button>
+						<button
+							type="button"
+							class="iar-btn-media iar-btn-media--ghost"
+							id="iar-maintenance-bg-remove"
+							<?php echo $bg_image_id ? '' : 'style="display:none;"'; ?>
+						>
+							<span class="material-symbols-outlined">delete</span>
+							Remove
+						</button>
+					</div>
+				</div>
+				</div>
+			</div>
+
 			<div class="iar-save-bar">
 				<div class="iar-save-bar__status">
 					<span class="iar-save-bar__dot"></span>
@@ -174,5 +236,55 @@ function iar_maintenance_mode_render_page(): void {
 
 		</form>
 	</div>
+
+	<script>
+	(function($) {
+		var frame;
+		var $preview = $('#iar-maintenance-bg-preview');
+		var $input   = $('#iar-maintenance-bg-id');
+		var $remove  = $('#iar-maintenance-bg-remove');
+
+		$('#iar-maintenance-bg-select').on('click', function(e) {
+			e.preventDefault();
+
+			if (frame) {
+				frame.open();
+				return;
+			}
+
+			frame = wp.media({
+				title: 'Select Background Image',
+				button: { text: 'Use as Background' },
+				multiple: false,
+				library: { type: 'image' }
+			});
+
+			frame.on('select', function() {
+				var attachment = frame.state().get('selection').first().toJSON();
+				var url = attachment.sizes && attachment.sizes.large
+					? attachment.sizes.large.url
+					: attachment.url;
+
+				$input.val(attachment.id);
+				$preview.html('<img src="' + url + '" alt="Background image preview">');
+				$remove.show();
+			});
+
+			frame.open();
+		});
+
+		$remove.on('click', function(e) {
+			e.preventDefault();
+			$input.val('');
+			$preview.html(
+				'<div class="iar-logo-preview__empty">' +
+					'<span class="material-symbols-outlined">image</span>' +
+					'<span>No image selected.</span>' +
+				'</div>'
+			);
+			$(this).hide();
+		});
+	})(jQuery);
+	</script>
 	<?php
 }

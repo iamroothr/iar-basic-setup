@@ -1065,6 +1065,18 @@ body.folded.iar-sidebar-collapsed .iar-save-bar {
 	object-fit: contain;
 }
 
+.iar-logo-preview--bg {
+	min-height: 200px;
+}
+
+.iar-logo-preview--bg img {
+	max-width: 100%;
+	max-height: 200px;
+	width: 100%;
+	object-fit: cover;
+	border-radius: 3px;
+}
+
 .iar-logo-preview__empty {
 	display: flex;
 	flex-direction: column;
