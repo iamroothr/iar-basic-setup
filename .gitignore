@@ -1,0 +1,12 @@
+.DS_Store
+node_modules/
+*.log
+vendor/
+.phpunit.result.cache
+.playwright-mcp/
+
+# AI Blueprint local workflow files
+.agents/
+.claude/
+blueprint/
+CLAUDE.md

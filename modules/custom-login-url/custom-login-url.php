@@ -30,6 +30,25 @@ function iar_custom_login_get_path(): string {
 }
 
 /**
+ * Get the current request path, relative to the site's home path.
+ *
+ * Strips the home URL's path prefix first so this still works when
+ * WordPress is installed in a subdirectory (e.g. example.com/blog/).
+ *
+ * @return string Request path with no leading/trailing slashes.
+ */
+function iar_custom_login_get_request_path(): string {
+	$request_path = trim( (string) wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+	$home_path    = trim( (string) wp_parse_url( home_url(), PHP_URL_PATH ), '/' );
+
+	if ( '' !== $home_path && 0 === strpos( $request_path, $home_path ) ) {
+		$request_path = trim( substr( $request_path, strlen( $home_path ) ), '/' );
+	}
+
+	return $request_path;
+}
+
+/**
  * Intercept requests to the custom login path and serve wp-login.php.
  */
 function iar_custom_login_handle_request(): void {
@@ -39,7 +58,7 @@ function iar_custom_login_handle_request(): void {
 		return;
 	}
 
-	$request_path = trim( wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+	$request_path = iar_custom_login_get_request_path();
 
 	if ( $request_path === $custom_path ) {
 		define( 'IAR_CUSTOM_LOGIN_ACCESS', true );
@@ -109,7 +128,7 @@ function iar_custom_login_block_wp_admin(): void {
 		return;
 	}
 
-	$request_path = trim( wp_parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ), '/' );
+	$request_path = iar_custom_login_get_request_path();
 
 	if ( 0 !== strpos( $request_path, 'wp-admin' ) ) {
 		return;
@@ -125,7 +144,9 @@ function iar_custom_login_block_wp_admin(): void {
 add_action( 'init', 'iar_custom_login_block_wp_admin', 1 );
 
 /**
- * Filter site_url() to rewrite wp-login.php to the custom path.
+ * Filter site_url() / network_site_url() to rewrite wp-login.php to the
+ * custom path. network_site_url() is also used by WordPress core for the
+ * password-reset email link, even on single-site installs.
  *
  * @param string $url    The complete site URL.
  * @param string $path   Path relative to the site URL.
@@ -146,6 +167,7 @@ function iar_custom_login_filter_url( string $url, string $path, ?string $scheme
 	return $url;
 }
 add_filter( 'site_url', 'iar_custom_login_filter_url', 10, 3 );
+add_filter( 'network_site_url', 'iar_custom_login_filter_url', 10, 3 );
 
 /**
  * Filter wp_redirect() to rewrite wp-login.php redirects to the custom path.
