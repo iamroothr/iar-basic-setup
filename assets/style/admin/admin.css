@@ -298,24 +298,6 @@ body.iar-sidebar-collapsed.iar-admin-page #wpbody-content .wrap {
 	line-height: 1.4;
 }
 
-.iar-sec-card__bar {
-	height: .25rem;
-	background: #f1f5f9;
-	border-radius: 9999px;
-	overflow: hidden;
-}
-
-.iar-sec-card__bar-fill {
-	height: 100%;
-	background: #10b981;
-	border-radius: 9999px;
-	transition: width .2s ease;
-}
-
-.iar-sec-card__bar-fill--off {
-	background: #cbd5e1;
-}
-
 /* ── Security Compact List ─────────────────────────────────────────── */
 .iar-sec-list {
 	background: rgba(226, 232, 240, .3);

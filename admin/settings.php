@@ -68,7 +68,7 @@ add_action( 'admin_enqueue_scripts', function ( $hook ) {
             // ── Save bar: mark unsaved changes ──────────────────────
             var form = document.querySelector('.iar-wrap form');
             var dot  = document.querySelector('.iar-save-bar__dot');
-            var msg  = document.querySelector('.iar-save-bar__status span');
+            var msg  = document.querySelector('.iar-save-bar__text');
 
             if ( form ) {
                 if ( dot ) {

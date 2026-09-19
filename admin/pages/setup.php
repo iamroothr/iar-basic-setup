@@ -116,7 +116,6 @@ function iar_basic_setup_render_page(): void {
 					<h2 class="iar-page-title">Module Dashboard</h2>
 					<p class="iar-page-subtitle">Optimize your WordPress editorial workflow by enabling or disabling specific core features and utilities.</p>
 				</div>
-				<span class="iar-system-badge<?php echo $active_count ? '' : ' iar-system-badge--off'; ?>"><?php echo $active_count ? esc_html( "{$active_count}/{$total_count} Modules Active" ) : 'No Modules Active'; ?></span>
 			</div>
 
 			<!-- Essentials Section -->
@@ -210,9 +209,6 @@ function iar_basic_setup_render_page(): void {
 										<div class="iar-toggle-track"><div class="iar-toggle-dot"></div></div>
 									</label>
 								</div>
-								<div class="iar-sec-card__bar">
-									<div class="iar-sec-card__bar-fill<?php echo $enabled ? '' : ' iar-sec-card__bar-fill--off'; ?>" style="width:<?php echo $enabled ? '100' : '0'; ?>%;"></div>
-								</div>
 							</div>
 						<?php endforeach; ?>
 					</div>
@@ -295,7 +291,7 @@ function iar_basic_setup_render_page(): void {
 			<div class="iar-save-bar">
 				<div class="iar-save-bar__status">
 					<span class="iar-save-bar__dot"></span>
-					<span>All changes saved.</span>
+					<span class="iar-save-bar__text">All changes saved.</span>
 				</div>
 				<div class="iar-save-bar__actions">
 					<button type="reset" class="iar-btn-discard">Discard</button>

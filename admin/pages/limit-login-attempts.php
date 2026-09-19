@@ -164,7 +164,7 @@ function iar_limit_login_attempts_render_page(): void {
 			<div class="iar-save-bar">
 				<div class="iar-save-bar__status">
 					<span class="iar-save-bar__dot"></span>
-					<span>All changes saved.</span>
+					<span class="iar-save-bar__text">All changes saved.</span>
 				</div>
 				<div class="iar-save-bar__actions">
 					<button type="reset" class="iar-btn-discard">Discard</button>
