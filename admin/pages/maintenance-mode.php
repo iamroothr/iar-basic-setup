@@ -81,6 +81,7 @@ function iar_maintenance_mode_render_page(): void {
 	$message          = $options['message'];
 	$bg_image_id      = ! empty( $options['background_image'] ) ? absint( $options['background_image'] ) : 0;
 	$bg_image_url     = $bg_image_id ? wp_get_attachment_image_url( $bg_image_id, 'large' ) : '';
+	$module_active    = ! empty( get_option( 'iar_basic_setup_options', [] )['maintenance-mode'] );
 	?>
 
 	<div class="wrap iar-wrap">
@@ -94,7 +95,7 @@ function iar_maintenance_mode_render_page(): void {
 					<h2 class="iar-page-title">Maintenance Mode</h2>
 					<p class="iar-page-subtitle">Displays a maintenance page for non-admin visitors.</p>
 				</div>
-				<span class="iar-system-badge">System Active</span>
+				<span class="iar-system-badge<?php echo $module_active ? '' : ' iar-system-badge--off'; ?>"><?php echo $module_active ? 'System Active' : 'System Inactive'; ?></span>
 			</div>
 
 			<!-- Status -->

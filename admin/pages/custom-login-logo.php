@@ -53,6 +53,7 @@ function iar_custom_login_logo_render_page(): void {
 	$options       = get_option( 'iar_custom_login_logo_options', [] );
 	$attachment_id = ! empty( $options['attachment_id'] ) ? (int) $options['attachment_id'] : 0;
 	$image_url     = $attachment_id ? wp_get_attachment_image_url( $attachment_id, 'medium' ) : '';
+	$module_active = ! empty( get_option( 'iar_basic_setup_options', [] )['custom-login-logo'] );
 	?>
 
 	<div class="wrap iar-wrap">
@@ -66,7 +67,7 @@ function iar_custom_login_logo_render_page(): void {
 					<h2 class="iar-page-title">Custom Login Logo</h2>
 					<p class="iar-page-subtitle">Replaces the WordPress logo on the login page with a custom image.</p>
 				</div>
-				<span class="iar-system-badge">System Active</span>
+				<span class="iar-system-badge<?php echo $module_active ? '' : ' iar-system-badge--off'; ?>"><?php echo $module_active ? 'System Active' : 'System Inactive'; ?></span>
 			</div>
 
 			<div class="iar-section">

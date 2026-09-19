@@ -79,7 +79,8 @@ function iar_custom_login_url_render_page(): void {
 	$login_path        = isset( $options['login_path'] ) ? $options['login_path'] : '';
 	$redirect_behavior = isset( $options['redirect_behavior'] ) ? $options['redirect_behavior'] : '404';
 
-	$errors = get_settings_errors( 'iar_custom_login_url_options' );
+	$errors        = get_settings_errors( 'iar_custom_login_url_options' );
+	$module_active = ! empty( get_option( 'iar_basic_setup_options', [] )['custom-login-url'] );
 	?>
 
 	<div class="wrap iar-wrap">
@@ -100,7 +101,7 @@ function iar_custom_login_url_render_page(): void {
 					<h2 class="iar-page-title">Custom Login URL</h2>
 					<p class="iar-page-subtitle">Replaces /wp-login.php with a custom path to reduce brute-force attacks.</p>
 				</div>
-				<span class="iar-system-badge">System Active</span>
+				<span class="iar-system-badge<?php echo $module_active ? '' : ' iar-system-badge--off'; ?>"><?php echo $module_active ? 'System Active' : 'System Inactive'; ?></span>
 			</div>
 
 			<!-- Login Path -->

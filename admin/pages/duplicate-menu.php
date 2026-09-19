@@ -29,7 +29,8 @@ function iar_duplicate_menu_render_page(): void {
 		return;
 	}
 
-	$menus = wp_get_nav_menus();
+	$menus         = wp_get_nav_menus();
+	$module_active = ! empty( get_option( 'iar_basic_setup_options', [] )['duplicate-menu'] );
 	?>
 
 	<div class="wrap iar-wrap">
@@ -40,7 +41,7 @@ function iar_duplicate_menu_render_page(): void {
 				<h2 class="iar-page-title">Duplicate Menu</h2>
 				<p class="iar-page-subtitle">Adds a Duplicate action to clone nav menus with all items.</p>
 			</div>
-			<span class="iar-system-badge">System Active</span>
+			<span class="iar-system-badge<?php echo $module_active ? '' : ' iar-system-badge--off'; ?>"><?php echo $module_active ? 'System Active' : 'System Inactive'; ?></span>
 		</div>
 
 		<?php if ( isset( $_GET['iar_menu_duplicated'] ) && 1 === absint( $_GET['iar_menu_duplicated'] ) ) : ?>

@@ -71,6 +71,7 @@ function iar_enable_debug_render_page(): void {
 	$options         = get_option( 'iar_enable_debug_options', [] );
 	$config_path     = ABSPATH . 'wp-config.php';
 	$config_writable = file_exists( $config_path ) && is_writable( $config_path );
+	$module_active   = ! empty( get_option( 'iar_basic_setup_options', [] )['enable-debug'] );
 	?>
 
 	<div class="wrap iar-wrap">
@@ -94,7 +95,7 @@ function iar_enable_debug_render_page(): void {
 					<h2 class="iar-page-title">Enable Debug Mode</h2>
 					<p class="iar-page-subtitle">Enables error reporting, display, and logging for troubleshooting.</p>
 				</div>
-				<span class="iar-system-badge">System Active</span>
+				<span class="iar-system-badge<?php echo $module_active ? '' : ' iar-system-badge--off'; ?>"><?php echo $module_active ? 'System Active' : 'System Inactive'; ?></span>
 			</div>
 
 			<div class="iar-section">

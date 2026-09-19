@@ -80,6 +80,7 @@ function iar_smtp_mail_render_page(): void {
     $from_name  = $options['from_name'];
 
     $test_nonce_url = wp_nonce_url( admin_url( 'admin-post.php?action=iar_smtp_test_email' ), 'iar_smtp_test_email' );
+    $module_active  = ! empty( get_option( 'iar_basic_setup_options', [] )['smtp-mail'] );
     ?>
 
     <div class="wrap iar-wrap">
@@ -107,7 +108,7 @@ function iar_smtp_mail_render_page(): void {
                     <h2 class="iar-page-title">SMTP Mail</h2>
                     <p class="iar-page-subtitle">Configures WordPress to send emails through SMTP.</p>
                 </div>
-                <span class="iar-system-badge">System Active</span>
+                <span class="iar-system-badge<?php echo $module_active ? '' : ' iar-system-badge--off'; ?>"><?php echo $module_active ? 'System Active' : 'System Inactive'; ?></span>
             </div>
 
             <!-- Server -->

@@ -40,7 +40,8 @@ function iar_post_cloner_render_page(): void {
 	$post_types = get_post_types( [ 'show_ui' => true ], 'objects' );
 	unset( $post_types['attachment'] );
 
-	$always_open = ! empty( $options['always_open'] );
+	$always_open   = ! empty( $options['always_open'] );
+	$module_active = ! empty( get_option( 'iar_basic_setup_options', [] )['post-cloner'] );
 	?>
 
 	<div class="wrap iar-wrap">
@@ -54,7 +55,7 @@ function iar_post_cloner_render_page(): void {
 					<h2 class="iar-page-title">Post Cloner</h2>
 					<p class="iar-page-subtitle">Adds a Clone action to duplicate posts, pages, and CPTs.</p>
 				</div>
-				<span class="iar-system-badge">System Active</span>
+				<span class="iar-system-badge<?php echo $module_active ? '' : ' iar-system-badge--off'; ?>"><?php echo $module_active ? 'System Active' : 'System Inactive'; ?></span>
 			</div>
 
 			<!-- Behaviour -->

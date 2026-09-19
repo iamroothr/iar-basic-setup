@@ -66,6 +66,11 @@ body.iar-sidebar-collapsed.iar-admin-page #wpbody-content .wrap {
 	flex-shrink: 0;
 }
 
+.iar-system-badge--off {
+	color: var(--iar-on-surface-var);
+	background: rgba(65, 71, 80, .1);
+}
+
 /* ── Section ───────────────────────────────────────────────────────── */
 .iar-section {
 	margin-bottom: 2.5rem;
@@ -302,9 +307,13 @@ body.iar-sidebar-collapsed.iar-admin-page #wpbody-content .wrap {
 
 .iar-sec-card__bar-fill {
 	height: 100%;
-	width: 80%;
 	background: #10b981;
 	border-radius: 9999px;
+	transition: width .2s ease;
+}
+
+.iar-sec-card__bar-fill--off {
+	background: #cbd5e1;
 }
 
 /* ── Security Compact List ─────────────────────────────────────────── */

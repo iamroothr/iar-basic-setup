@@ -76,6 +76,11 @@ add_action( 'admin_enqueue_scripts', function ( $hook ) {
                         dot.classList.add('has-changes');
                         if ( msg ) msg.textContent = 'Unsaved changes.';
                     });
+
+                    form.addEventListener('reset', function () {
+                        dot.classList.remove('has-changes');
+                        if ( msg ) msg.textContent = 'All changes saved.';
+                    });
                 }
 
                 // Update compact security list status labels on toggle

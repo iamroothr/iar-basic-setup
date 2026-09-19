@@ -93,9 +93,9 @@ function iar_basic_setup_render_page(): void {
 	];
 
 	$security_cards = [
-		'disable-xmlrpc'       => [ 'icon' => 'security', 'bar' => true ],
-		'custom-login-url'     => [ 'icon' => 'lock',     'bar' => false ],
-		'limit-login-attempts' => [ 'icon' => 'block',    'bar' => false ],
+		'disable-xmlrpc'       => [ 'icon' => 'security' ],
+		'custom-login-url'     => [ 'icon' => 'lock' ],
+		'limit-login-attempts' => [ 'icon' => 'block' ],
 	];
 
 	$security_list = [
@@ -116,7 +116,7 @@ function iar_basic_setup_render_page(): void {
 					<h2 class="iar-page-title">Module Dashboard</h2>
 					<p class="iar-page-subtitle">Optimize your WordPress editorial workflow by enabling or disabling specific core features and utilities.</p>
 				</div>
-				<span class="iar-system-badge">System Active</span>
+				<span class="iar-system-badge<?php echo $active_count ? '' : ' iar-system-badge--off'; ?>"><?php echo $active_count ? esc_html( "{$active_count}/{$total_count} Modules Active" ) : 'No Modules Active'; ?></span>
 			</div>
 
 			<!-- Essentials Section -->
@@ -210,11 +210,9 @@ function iar_basic_setup_render_page(): void {
 										<div class="iar-toggle-track"><div class="iar-toggle-dot"></div></div>
 									</label>
 								</div>
-								<?php if ( $meta['bar'] ) : ?>
-									<div class="iar-sec-card__bar">
-										<div class="iar-sec-card__bar-fill"></div>
-									</div>
-								<?php endif; ?>
+								<div class="iar-sec-card__bar">
+									<div class="iar-sec-card__bar-fill<?php echo $enabled ? '' : ' iar-sec-card__bar-fill--off'; ?>" style="width:<?php echo $enabled ? '100' : '0'; ?>%;"></div>
+								</div>
 							</div>
 						<?php endforeach; ?>
 					</div>
