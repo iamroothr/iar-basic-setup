@@ -729,28 +729,57 @@ body.folded.iar-sidebar-collapsed .iar-save-bar {
 /* ── Responsive (mobile) ───────────────────────────────────────────── */
 @media screen and (max-width: 782px) {
 	.iar-plugin-sidebar {
-		position: static;
+		position: absolute;
+		top: 46px;
+		left: 0;
+		right: 0;
 		width: 100%;
 		height: auto;
-		top: 0;
-		left: 0;
 		border-right: none;
 		border-bottom: 1px solid #e2e8f0;
+	}
+
+	.iar-plugin-sidebar::after {
+		content: '';
+		position: absolute;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		width: 1.5rem;
+		background: linear-gradient(to right, transparent, #f8fafc);
+		pointer-events: none;
+	}
+
+	body.iar-sidebar-collapsed .iar-plugin-sidebar {
+		width: 100%;
+	}
+
+	.iar-plugin-sidebar__header,
+	.iar-plugin-sidebar__footer {
+		display: none;
+	}
+
+	.iar-plugin-sidebar__nav {
+		flex-direction: row;
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+	}
+
+	.iar-sidebar-link {
+		flex-shrink: 0;
+		white-space: nowrap;
+	}
+
+	body.iar-sidebar-collapsed .iar-sidebar-link__label {
+		display: inline;
 	}
 
 	.iar-admin-page #wpbody-content .wrap,
 	body.iar-sidebar-collapsed.iar-admin-page #wpbody-content .wrap,
 	body.folded .iar-admin-page #wpbody-content .wrap {
 		margin-left: 0;
-	}
-
-	.iar-plugin-sidebar__nav {
-		flex-direction: row;
-		flex-wrap: wrap;
-	}
-
-	body.iar-sidebar-collapsed .iar-sidebar-link__label {
-		display: inline;
+		padding-top: 80px;
 	}
 
 	.iar-save-bar,
