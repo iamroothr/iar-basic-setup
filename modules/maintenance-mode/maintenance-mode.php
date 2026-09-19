@@ -15,9 +15,10 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function iar_maintenance_mode_get_options(): array {
 	$defaults = [
-		'enabled'    => 0,
-		'page_title' => 'Under Maintenance',
-		'message'    => 'We are currently performing scheduled maintenance. Please check back soon.',
+		'enabled'          => 0,
+		'page_title'       => 'Under Maintenance',
+		'message'          => 'We are currently performing scheduled maintenance. Please check back soon.',
+		'background_image' => 0,
 	];
 
 	$options = get_option( 'iar_maintenance_mode_options', [] );
@@ -43,8 +44,10 @@ function iar_maintenance_mode_check(): void {
 		return;
 	}
 
-	$title   = esc_html( $options['page_title'] );
-	$message = wp_kses_post( $options['message'] );
+	$title    = esc_html( $options['page_title'] );
+	$message  = wp_kses_post( $options['message'] );
+	$bg_id    = ! empty( $options['background_image'] ) ? absint( $options['background_image'] ) : 0;
+	$bg_url   = $bg_id ? wp_get_attachment_url( $bg_id ) : '';
 
 	header( 'HTTP/1.1 503 Service Unavailable' );
 	header( 'Retry-After: 3600' );
@@ -60,22 +63,40 @@ function iar_maintenance_mode_check(): void {
 			* { box-sizing: border-box; }
 			body {
 				font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+				<?php if ( $bg_url ) : ?>
+				background: url('<?php echo esc_url( $bg_url ); ?>') center center / cover no-repeat fixed;
+				<?php else : ?>
 				background: #f1f1f1;
-				color: #444;
+				<?php endif; ?>
+				color: <?php echo $bg_url ? '#fff' : '#444'; ?>;
 				margin: 0;
 				padding: 20px;
 				display: flex;
 				justify-content: center;
 				align-items: center;
 				min-height: 100vh;
+				position: relative;
 			}
+			<?php if ( $bg_url ) : ?>
+			body::before {
+				content: '';
+				position: fixed;
+				inset: 0;
+				background: rgba(0, 0, 0, 0.3);
+				pointer-events: none;
+			}
+			<?php endif; ?>
 			.maintenance-container {
+				<?php if ( ! $bg_url ) : ?>
 				background: #fff;
-				padding: 40px;
-				border-radius: 8px;
 				box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+				border-radius: 8px;
+				<?php endif; ?>
+				padding: 60px;
 				max-width: 600px;
 				text-align: center;
+				position: relative;
+                background: rgba(0,0,0,0.5);
 			}
 			h1 {
 				margin: 0 0 20px;

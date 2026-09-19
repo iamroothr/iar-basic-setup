@@ -115,7 +115,6 @@ function iar_custom_login_url_render_page(): void {
 				<div class="iar-field-list">
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
-							<span class="material-symbols-outlined iar-module-icon iar-module-icon--sky">edit</span>
 							<div>
 								<div class="iar-field-row__label">Custom Path</div>
 								<div class="iar-field-row__desc">Lowercase letters, numbers, hyphens only. Leave empty to keep <code>/wp-login.php</code>.</div>
@@ -151,7 +150,6 @@ function iar_custom_login_url_render_page(): void {
 				<div class="iar-field-list">
 					<div class="iar-field-row">
 						<div class="iar-field-row__left">
-							<span class="material-symbols-outlined iar-module-icon iar-module-icon--amber">manage_accounts</span>
 							<div>
 								<div class="iar-field-row__label">When <code>/wp-login.php</code> is accessed directly</div>
 								<div class="iar-field-row__desc">What happens when someone visits the old login URL.</div>
