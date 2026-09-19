@@ -143,15 +143,16 @@ add_action( 'admin_head', function () {
     ];
     echo '<style>';
     echo '#adminmenu .toplevel_page_iar-basic-setup-settings .wp-menu-image img { padding-top: 7px; }';
-    // Hide "Setup" first submenu item (duplicate of parent)
-    echo '#adminmenu .toplevel_page_iar-basic-setup-settings > .wp-submenu > li.wp-first-item { display:none!important; }';
     foreach ( $hidden_slugs as $slug ) {
         $href = esc_attr( 'admin.php?page=' . $slug );
-        // Hide the whole <li>, not just the link: hiding only the <a> leaves an
-        // empty row that still renders with the submenu's default background,
-        // showing up as a blank dark bar when the flyout submenu appears on hover.
         echo '#adminmenu li:has(> a[href="' . $href . '"]) { display:none!important; }';
     }
+    // Every submenu item under our top-level page is hidden above (or is the
+    // "Setup" duplicate of the parent), so the submenu never has anything to
+    // show. Hide the whole flyout/inline .wp-submenu instead of just its
+    // items - otherwise its empty container still renders as a blank dark
+    // box on hover.
+    echo '#adminmenu .toplevel_page_iar-basic-setup-settings > .wp-submenu { display:none!important; }';
     echo '</style>';
 } );
 
