@@ -47,7 +47,12 @@ function iar_smtp_mail_sanitize( $input ): array {
 
     $sanitized['username'] = isset( $input['username'] ) ? sanitize_text_field( $input['username'] ) : '';
 
-    $sanitized['password'] = isset( $input['password'] ) ? $input['password'] : '';
+    // The password field is always rendered empty (see iar_smtp_mail_render_page),
+    // so an empty submission means "unchanged", not "clear the password".
+    $existing               = get_option( 'iar_smtp_mail_options', [] );
+    $sanitized['password'] = ( isset( $input['password'] ) && '' !== $input['password'] )
+        ? $input['password']
+        : ( isset( $existing['password'] ) ? $existing['password'] : '' );
 
     $sanitized['from_email'] = isset( $input['from_email'] ) ? sanitize_email( $input['from_email'] ) : '';
 
@@ -242,9 +247,10 @@ function iar_smtp_mail_render_page(): void {
                                 <input
                                         type="password"
                                         name="iar_smtp_mail_options[password]"
-                                        value="<?php echo esc_attr( $password ); ?>"
+                                        value=""
                                         class="iar-input"
                                         autocomplete="new-password"
+                                        placeholder="<?php echo '' !== $password ? esc_attr__( 'Unchanged - leave blank to keep', 'iar-basic-setup' ) : ''; ?>"
                                 >
                             </div>
                         </div>

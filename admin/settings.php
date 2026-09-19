@@ -142,7 +142,10 @@ add_action( 'admin_head', function () {
     echo '#adminmenu .toplevel_page_iar-basic-setup-settings > .wp-submenu > li.wp-first-item { display:none!important; }';
     foreach ( $hidden_slugs as $slug ) {
         $href = esc_attr( 'admin.php?page=' . $slug );
-        echo '#adminmenu a[href="' . $href . '"] { display:none!important; }';
+        // Hide the whole <li>, not just the link: hiding only the <a> leaves an
+        // empty row that still renders with the submenu's default background,
+        // showing up as a blank dark bar when the flyout submenu appears on hover.
+        echo '#adminmenu li:has(> a[href="' . $href . '"]) { display:none!important; }';
     }
     echo '</style>';
 } );

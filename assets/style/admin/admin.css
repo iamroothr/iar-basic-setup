@@ -726,6 +726,82 @@ body.folded.iar-sidebar-collapsed .iar-save-bar {
 	left: 92px;
 }
 
+/* ── Responsive (mobile) ───────────────────────────────────────────── */
+@media screen and (max-width: 782px) {
+	.iar-plugin-sidebar {
+		position: static;
+		width: 100%;
+		height: auto;
+		top: 0;
+		left: 0;
+		border-right: none;
+		border-bottom: 1px solid #e2e8f0;
+	}
+
+	.iar-admin-page #wpbody-content .wrap,
+	body.iar-sidebar-collapsed.iar-admin-page #wpbody-content .wrap,
+	body.folded .iar-admin-page #wpbody-content .wrap {
+		margin-left: 0;
+	}
+
+	.iar-plugin-sidebar__nav {
+		flex-direction: row;
+		flex-wrap: wrap;
+	}
+
+	body.iar-sidebar-collapsed .iar-sidebar-link__label {
+		display: inline;
+	}
+
+	.iar-save-bar,
+	body.folded .iar-save-bar,
+	body.iar-sidebar-collapsed .iar-save-bar,
+	body.folded.iar-sidebar-collapsed .iar-save-bar {
+		left: 0;
+		flex-direction: column;
+		align-items: stretch;
+		gap: .75rem;
+		padding: .75rem 1rem;
+	}
+
+	.iar-save-bar__actions {
+		justify-content: flex-end;
+	}
+
+	.iar-two-col {
+		grid-template-columns: 1fr;
+	}
+
+	.iar-col-main,
+	.iar-col-side {
+		min-width: 0;
+	}
+
+	.iar-module-info p {
+		white-space: normal;
+	}
+
+	.iar-stats-bar {
+		grid-template-columns: 1fr;
+	}
+
+	.iar-field-row {
+		flex-direction: column;
+		gap: .5rem;
+	}
+
+	.iar-field-row__left {
+		min-width: 0;
+	}
+
+	.iar-input,
+	.iar-textarea,
+	.iar-select,
+	.iar-input-with-prefix {
+		max-width: none;
+	}
+}
+
 /* ── Section Card (ledger style) ─────────────────────────────────── */
 .iar-section--card {
 	background: var(--iar-surface-card);
