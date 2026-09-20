@@ -4,7 +4,7 @@ Tags: cleanup, optimization, disable gutenberg, disable comments, security, smtp
 Requires at least: 5.0
 Tested up to: 6.7
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: https://www.gnu.org/licenses/gpl-2.0.html
 
@@ -76,6 +76,14 @@ The Post Cloner duplicates: post title (prefixed with "Copy of"), content, excer
 
 == Changelog ==
 
+= 1.1.0 =
+* Redesigned settings UI with a secondary plugin sidebar and card-based sections
+* Added a responsive mobile layout for admin pages
+* Dashboard module indicators now reflect real module state
+* Fixed the SMTP password being exposed in the settings page source
+* Fixed an empty admin menu flyout rendering on hover
+* Fixed a save-bar text overlap on narrow layouts
+
 = 1.0.0 =
 * Initial release
 * Added Disable Gutenberg module
@@ -99,6 +107,9 @@ The Post Cloner duplicates: post title (prefixed with "Copy of"), content, excer
 * Added SMTP Mail module
 
 == Upgrade Notice ==
+
+= 1.1.0 =
+UI polish, mobile layout fixes, and a fix for the SMTP password being exposed in page source.
 
 = 1.0.0 =
 Initial release.

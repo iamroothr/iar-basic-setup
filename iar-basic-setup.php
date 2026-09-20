@@ -3,7 +3,7 @@
  * Plugin Name:       IAR Basic Setup
  * Plugin URI:        https://iamroot.agency
  * Description:       A modular WordPress cleanup and optimization plugin. Enable only the features you need.
- * Version:           1.0.0
+ * Version:           1.1.0
  * Author:            I am root
  * Author URI:        https://iamroot.agency
  * Text Domain:       iar-basic-setup
@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'IAR_PLUGIN_VERSION', '1.0.0' );
+define( 'IAR_PLUGIN_VERSION', '1.1.0' );
 define( 'IAR_PLUGIN_PATH', plugin_dir_path( __FILE__ ) );
 define( 'IAR_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
 
