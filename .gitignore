@@ -11,3 +11,9 @@ vendor/
 blueprint/
 CLAUDE.md
 AGENTS.md
+
+# Local-only dev/test tooling
+composer.json
+composer.lock
+phpunit.xml
+tests/
